@@ -52,3 +52,8 @@
 .link:hover {
   color: var(--ink);
 }
+
+.divider {
+  color: var(--rule-light);
+  font-size: var(--text-sm);
+}
