@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { api, type ValidationIssue, type ValidateRulesResponse } from '../../api';
 import styles from './Tools.module.css';
 
 const exampleRule = `Feature: Order Processing
@@ -45,55 +46,112 @@ const issuePatterns = [
   { pattern: 'Human input required', description: '"When the user decides" breaks automation' },
 ];
 
-function validateRule(text: string): { valid: boolean; issues: string[] } {
-  const issues: string[] = [];
+// Client-side validation fallback
+function validateRuleLocally(text: string): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
   const lines = text.split('\n');
 
-  // Check for Feature
   if (!lines.some(l => l.trim().startsWith('Feature:'))) {
-    issues.push('Missing Feature declaration');
+    issues.push({
+      location: 'File',
+      category: 'convention',
+      severity: 'error',
+      message: 'Missing Feature declaration',
+      suggestion: 'Add a Feature: line at the top',
+    });
   }
 
-  // Check for Rules
-  const hasRules = lines.some(l => l.trim().startsWith('Rule:'));
-  if (!hasRules) {
-    issues.push('No Rule definitions found');
-  }
-
-  // Check for Given/When/Then
   const hasGiven = lines.some(l => l.trim().startsWith('Given'));
   const hasWhen = lines.some(l => l.trim().startsWith('When'));
   const hasThen = lines.some(l => l.trim().startsWith('Then'));
 
-  if (!hasGiven) issues.push('Missing Given clause (preconditions)');
-  if (!hasWhen) issues.push('Missing When clause (action)');
-  if (!hasThen) issues.push('Missing Then clause (expected outcome)');
+  if (!hasGiven) {
+    issues.push({
+      location: 'Scenario',
+      category: 'convention',
+      severity: 'warning',
+      message: 'Missing Given clause (preconditions)',
+      suggestion: 'Add preconditions with Given steps',
+    });
+  }
+  if (!hasWhen) {
+    issues.push({
+      location: 'Scenario',
+      category: 'convention',
+      severity: 'warning',
+      message: 'Missing When clause (action)',
+      suggestion: 'Add an action with When steps',
+    });
+  }
+  if (!hasThen) {
+    issues.push({
+      location: 'Scenario',
+      category: 'convention',
+      severity: 'error',
+      message: 'Missing Then clause (expected outcome)',
+      suggestion: 'Add expected outcomes with Then steps',
+    });
+  }
 
-  // Check for uncertain language
-  const uncertainWords = ['should', 'might', 'probably', 'maybe', 'possibly'];
+  const uncertainWords = ['might', 'maybe', 'possibly', 'probably'];
   for (const word of uncertainWords) {
     if (text.toLowerCase().includes(word)) {
-      issues.push(`Uncertain language detected: "${word}"`);
+      issues.push({
+        location: 'Content',
+        category: 'convention',
+        severity: 'warning',
+        message: `Uncertain language detected: "${word}"`,
+        suggestion: 'Use definite language for testable assertions',
+      });
     }
   }
 
-  // Check for vague terms
-  const vagueTerms = ['some data', 'something', 'it works', 'correctly', 'properly'];
-  for (const term of vagueTerms) {
-    if (text.toLowerCase().includes(term)) {
-      issues.push(`Vague term detected: "${term}"`);
-    }
-  }
-
-  return { valid: issues.length === 0, issues };
+  return issues;
 }
+
+type ValidationState = {
+  loading: boolean;
+  result: ValidateRulesResponse | null;
+  error: string | null;
+  mode: 'local' | 'api';
+};
 
 export function Tools() {
   const [ruleText, setRuleText] = useState(exampleRule);
-  const [validation, setValidation] = useState<{ valid: boolean; issues: string[] } | null>(null);
+  const [useLlm, setUseLlm] = useState(false);
+  const [validation, setValidation] = useState<ValidationState>({
+    loading: false,
+    result: null,
+    error: null,
+    mode: 'local',
+  });
 
-  const handleValidate = () => {
-    setValidation(validateRule(ruleText));
+  const handleValidate = async () => {
+    setValidation({ loading: true, result: null, error: null, mode: 'local' });
+
+    try {
+      // Try API validation first
+      const result = await api.validateRules({
+        content: ruleText,
+        file_name: 'rules.feature',
+        use_llm: useLlm,
+      });
+      setValidation({ loading: false, result, error: null, mode: 'api' });
+    } catch {
+      // Fall back to local validation
+      const issues = validateRuleLocally(ruleText);
+      setValidation({
+        loading: false,
+        result: {
+          is_valid: issues.filter(i => i.severity === 'error').length === 0,
+          scenario_count: 0,
+          issues,
+          confidence: 0.5,
+        },
+        error: null,
+        mode: 'local',
+      });
+    }
   };
 
   return (
@@ -143,16 +201,30 @@ export function Tools() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Rule Editor</h2>
         <p className={styles.sectionDescription}>
-          Write Converge Rules and validate them. The full LLM-powered validation
-          requires converge-tool; this editor performs basic syntax checks.
+          Write Converge Rules and validate them. Enable LLM validation for
+          deep business sense and compilability checks.
         </p>
         <div className={styles.editor}>
           <div className={styles.editorPane}>
             <div className={styles.editorHeader}>
               <span>rules.feature</span>
-              <button className={styles.validateBtn} onClick={handleValidate}>
-                Validate
-              </button>
+              <div className={styles.editorActions}>
+                <label className={styles.llmToggle}>
+                  <input
+                    type="checkbox"
+                    checked={useLlm}
+                    onChange={(e) => setUseLlm(e.target.checked)}
+                  />
+                  <span>LLM</span>
+                </label>
+                <button
+                  className={styles.validateBtn}
+                  onClick={handleValidate}
+                  disabled={validation.loading}
+                >
+                  {validation.loading ? 'Validating...' : 'Validate'}
+                </button>
+              </div>
             </div>
             <textarea
               className={styles.textarea}
@@ -164,21 +236,54 @@ export function Tools() {
           <div className={styles.resultPane}>
             <div className={styles.editorHeader}>
               <span>Validation Result</span>
+              {validation.result && (
+                <span className={styles.modeTag}>
+                  {validation.mode === 'api' ? (useLlm ? 'LLM' : 'API') : 'Local'}
+                </span>
+              )}
             </div>
             <div className={styles.results}>
-              {validation === null ? (
+              {validation.loading ? (
+                <p className={styles.placeholder}>Validating...</p>
+              ) : validation.error ? (
+                <div className={styles.errorResult}>
+                  <span className={styles.issueIcon}>!</span>
+                  <span>{validation.error}</span>
+                </div>
+              ) : validation.result === null ? (
                 <p className={styles.placeholder}>Click "Validate" to check your rules</p>
-              ) : validation.valid ? (
+              ) : validation.result.is_valid ? (
                 <div className={styles.valid}>
                   <span className={styles.checkmark}>&#10003;</span>
-                  <span>Rules are valid</span>
+                  <div>
+                    <span>Rules are valid</span>
+                    {validation.result.scenario_count > 0 && (
+                      <span className={styles.meta}>
+                        {validation.result.scenario_count} scenarios checked
+                      </span>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className={styles.issues}>
-                  {validation.issues.map((issue, i) => (
-                    <div key={i} className={styles.issue}>
-                      <span className={styles.issueIcon}>&#10007;</span>
-                      <span>{issue}</span>
+                  {validation.result.issues.map((issue, i) => (
+                    <div
+                      key={i}
+                      className={`${styles.issueItem} ${styles[issue.severity]}`}
+                    >
+                      <span className={styles.issueIcon}>
+                        {issue.severity === 'error' ? '✗' : issue.severity === 'warning' ? '!' : 'i'}
+                      </span>
+                      <div className={styles.issueContent}>
+                        <div className={styles.issueHeader}>
+                          <code className={styles.issueLocation}>{issue.location}</code>
+                          <span className={styles.issueCategory}>{issue.category}</span>
+                        </div>
+                        <span className={styles.issueMessage}>{issue.message}</span>
+                        {issue.suggestion && (
+                          <span className={styles.issueSuggestion}>{issue.suggestion}</span>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>

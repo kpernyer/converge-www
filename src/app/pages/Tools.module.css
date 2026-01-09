@@ -124,6 +124,26 @@
   color: var(--ink-muted);
 }
 
+.editorActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.llmToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.llmToggle input {
+  accent-color: var(--accent);
+}
+
 .validateBtn {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -137,6 +157,19 @@
 
 .validateBtn:hover {
   background: var(--ink-secondary);
+}
+
+.validateBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modeTag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-2);
+  background: var(--surface);
+  color: var(--ink-muted);
 }
 
 .textarea {
@@ -182,20 +215,98 @@
 .issues {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
-.issue {
+.issueItem {
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
+  padding: var(--space-2);
+  border-left: 2px solid var(--rule-light);
+}
+
+.issueItem.error {
+  border-left-color: #c00;
+}
+
+.issueItem.warning {
+  border-left-color: #c90;
+}
+
+.issueItem.info {
+  border-left-color: var(--accent);
+}
+
+.issueContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.issueHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.issueLocation {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  background: transparent;
+}
+
+.issueCategory {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  padding: 0 var(--space-1);
+  background: var(--surface);
+}
+
+.issueMessage {
   font-size: var(--text-sm);
   color: var(--ink);
 }
 
+.issueSuggestion {
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
 .issueIcon {
-  color: #c00;
   flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.error .issueIcon {
+  color: #c00;
+}
+
+.warning .issueIcon {
+  color: #c90;
+}
+
+.info .issueIcon {
+  color: var(--accent);
+}
+
+.errorResult {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: #c00;
+  font-size: var(--text-sm);
+}
+
+.meta {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  margin-top: var(--space-1);
 }
 
 .dimensionGrid {
