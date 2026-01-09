@@ -10,6 +10,9 @@ export function Header() {
           <span className={styles.logoText}>converge</span>
         </Link>
         <nav className={styles.nav}>
+          <Link to="/demo" className={styles.link}>
+            Demo
+          </Link>
           <Link to="/manifesto" className={styles.link}>
             Manifesto
           </Link>
