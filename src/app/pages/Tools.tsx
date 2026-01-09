@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api, type ValidationIssue, type ValidateRulesResponse } from '../../api';
+import { useValidateRules } from '../hooks/useValidateRules';
 import styles from './Tools.module.css';
 
 const exampleRule = `Feature: Order Processing
@@ -46,112 +46,13 @@ const issuePatterns = [
   { pattern: 'Human input required', description: '"When the user decides" breaks automation' },
 ];
 
-// Client-side validation fallback
-function validateRuleLocally(text: string): ValidationIssue[] {
-  const issues: ValidationIssue[] = [];
-  const lines = text.split('\n');
-
-  if (!lines.some(l => l.trim().startsWith('Feature:'))) {
-    issues.push({
-      location: 'File',
-      category: 'convention',
-      severity: 'error',
-      message: 'Missing Feature declaration',
-      suggestion: 'Add a Feature: line at the top',
-    });
-  }
-
-  const hasGiven = lines.some(l => l.trim().startsWith('Given'));
-  const hasWhen = lines.some(l => l.trim().startsWith('When'));
-  const hasThen = lines.some(l => l.trim().startsWith('Then'));
-
-  if (!hasGiven) {
-    issues.push({
-      location: 'Scenario',
-      category: 'convention',
-      severity: 'warning',
-      message: 'Missing Given clause (preconditions)',
-      suggestion: 'Add preconditions with Given steps',
-    });
-  }
-  if (!hasWhen) {
-    issues.push({
-      location: 'Scenario',
-      category: 'convention',
-      severity: 'warning',
-      message: 'Missing When clause (action)',
-      suggestion: 'Add an action with When steps',
-    });
-  }
-  if (!hasThen) {
-    issues.push({
-      location: 'Scenario',
-      category: 'convention',
-      severity: 'error',
-      message: 'Missing Then clause (expected outcome)',
-      suggestion: 'Add expected outcomes with Then steps',
-    });
-  }
-
-  const uncertainWords = ['might', 'maybe', 'possibly', 'probably'];
-  for (const word of uncertainWords) {
-    if (text.toLowerCase().includes(word)) {
-      issues.push({
-        location: 'Content',
-        category: 'convention',
-        severity: 'warning',
-        message: `Uncertain language detected: "${word}"`,
-        suggestion: 'Use definite language for testable assertions',
-      });
-    }
-  }
-
-  return issues;
-}
-
-type ValidationState = {
-  loading: boolean;
-  result: ValidateRulesResponse | null;
-  error: string | null;
-  mode: 'local' | 'api';
-};
-
 export function Tools() {
   const [ruleText, setRuleText] = useState(exampleRule);
   const [useLlm, setUseLlm] = useState(false);
-  const [validation, setValidation] = useState<ValidationState>({
-    loading: false,
-    result: null,
-    error: null,
-    mode: 'local',
-  });
+  const { state: validation, validate } = useValidateRules();
 
-  const handleValidate = async () => {
-    setValidation({ loading: true, result: null, error: null, mode: 'local' });
-
-    try {
-      // Try API validation first
-      const result = await api.validateRules({
-        content: ruleText,
-        file_name: 'rules.feature',
-        use_llm: useLlm,
-      });
-      setValidation({ loading: false, result, error: null, mode: 'api' });
-    } catch {
-      // Fall back to local validation
-      const issues = validateRuleLocally(ruleText);
-      setValidation({
-        loading: false,
-        result: {
-          is_valid: issues.filter(i => i.severity === 'error').length === 0,
-          scenario_count: 0,
-          issues,
-          confidence: 0.5,
-        },
-        error: null,
-        mode: 'local',
-      });
-    }
+  const handleValidate = () => {
+    void validate(ruleText, useLlm);
   };
 
   return (
@@ -220,9 +121,9 @@ export function Tools() {
                 <button
                   className={styles.validateBtn}
                   onClick={handleValidate}
-                  disabled={validation.loading}
+                  disabled={validation.status === 'loading'}
                 >
-                  {validation.loading ? 'Validating...' : 'Validate'}
+                  {validation.status === 'loading' ? 'Validating...' : 'Validate'}
                 </button>
               </div>
             </div>
@@ -236,21 +137,31 @@ export function Tools() {
           <div className={styles.resultPane}>
             <div className={styles.editorHeader}>
               <span>Validation Result</span>
-              {validation.result && (
+              {validation.status === 'success' && (
                 <span className={styles.modeTag}>
                   {validation.mode === 'api' ? (useLlm ? 'LLM' : 'API') : 'Local'}
                 </span>
               )}
+              {validation.status === 'error' && (
+                <span className={styles.modeTag}>
+                  {validation.mode === 'api' ? 'API Error' : 'Local'}
+                </span>
+              )}
             </div>
             <div className={styles.results}>
-              {validation.loading ? (
+              {validation.status === 'loading' ? (
                 <p className={styles.placeholder}>Validating...</p>
-              ) : validation.error ? (
+              ) : validation.status === 'error' ? (
                 <div className={styles.errorResult}>
                   <span className={styles.issueIcon}>!</span>
-                  <span>{validation.error}</span>
+                  <div>
+                    <span>{validation.error.message}</span>
+                    {validation.error.type === 'api' && (
+                      <span className={styles.meta}>HTTP {validation.error.status}</span>
+                    )}
+                  </div>
                 </div>
-              ) : validation.result === null ? (
+              ) : validation.status === 'idle' ? (
                 <p className={styles.placeholder}>Click "Validate" to check your rules</p>
               ) : validation.result.is_valid ? (
                 <div className={styles.valid}>

@@ -1,0 +1,166 @@
+# Cursor Rules for converge.hey.sh-www
+
+## Project Context
+This is a React 19 + TypeScript website for the Converge multi-agent runtime, deployed to Firebase Hosting.
+
+**Stack:**
+- Runtime: Bun
+- Frontend: React 19 + TypeScript + Vite
+- Styling: CSS Modules
+- Formatting: Prettier
+- Linting: ESLint (flat config)
+- Deployment: Firebase Hosting
+
+## TypeScript Standards
+
+### Non-Negotiables
+- TypeScript strict mode is required (already enabled in tsconfig.app.json)
+- No `any` in production code
+- All external inputs are validated at boundaries
+- Side effects do not live in React components
+- Prefer refactoring over greenfield rewrites
+
+### Type Safety Policy
+- `strict: true` is mandatory
+- Avoid `as` casts - prefer proper type narrowing
+- `unknown` allowed only at boundaries (API responses, user input), must be narrowed immediately
+- Prefer discriminated unions for state and error handling
+- Never throw strings - use Error objects or Result types
+
+### External Boundary Validation
+- Validate at the edge:
+  - API responses (use Zod schemas)
+  - Environment variables
+  - User input
+- Parse once, assume correctness internally
+
+## Code Organization
+
+### Current Structure
+```
+src/
+  app/          # Main app components and pages
+  api/          # API client and types
+  styles/       # Global styles
+```
+
+### Component Guidelines
+- Use CSS Modules for component styling (`.module.css`)
+- Keep components focused and single-purpose
+- Extract reusable logic into custom hooks
+- Side effects (API calls, subscriptions) belong in hooks, not components
+- Use React Query or similar for server state management if needed
+
+### File Naming
+- Components: PascalCase (e.g., `Hero.tsx`)
+- CSS Modules: `ComponentName.module.css`
+- Utilities: camelCase (e.g., `formatDate.ts`)
+- Types: PascalCase (e.g., `ApiTypes.ts`)
+
+## React Patterns
+
+### Component Structure
+```typescript
+import styles from './Component.module.css';
+
+interface ComponentProps {
+  // Props with explicit types
+}
+
+export function Component({ prop }: ComponentProps) {
+  // Component logic
+  return (
+    <div className={styles.container}>
+      {/* JSX */}
+    </div>
+  );
+}
+```
+
+### Hooks
+- Custom hooks should start with `use` prefix
+- Extract side effects and complex logic into hooks
+- Keep components presentational when possible
+
+### State Management
+- Use React state for local UI state
+- Use React Query for server state (if needed)
+- Avoid prop drilling - consider context for deeply nested props
+
+## API Integration
+
+### API Client Pattern
+- Centralize API calls in `src/api/`
+- Validate responses with Zod schemas
+- Use discriminated unions for error handling
+- Never leak raw DTOs into UI components
+
+### Example Pattern
+```typescript
+import { z } from 'zod';
+
+const ResponseSchema = z.object({
+  // schema definition
+});
+
+export async function fetchData(): Promise<Result<Data, Error>> {
+  // fetch and validate
+}
+```
+
+## Error Handling
+
+- Model errors explicitly using discriminated unions
+- Use Result-style returns for operations that can fail
+- Never throw strings - use Error objects
+- Log errors appropriately (avoid logging tokens or PII)
+
+## Tooling
+
+### Scripts
+- `bun run dev` - Development server
+- `bun run build` - Production build
+- `bun run fmt` - Format with Prettier
+- `bun run lint` - Lint with ESLint
+- `bun run typecheck` - Type check
+- `just check` - Run all checks
+
+### Before Committing
+- Run `just check` to ensure: format, lint, typecheck, and build all pass
+- Ensure no `any` types
+- Ensure boundary validation is present for external data
+
+## CSS Modules
+
+- Use CSS Modules for component-scoped styles
+- Keep global styles in `src/styles/`
+- Use CSS custom properties (tokens) for theming
+- Prefer composition over deep nesting
+
+## Code Review Checklist
+
+- [ ] Strict TS enabled (verify no `any`)
+- [ ] Boundary validation present for external data
+- [ ] Side effects outside React components (in hooks)
+- [ ] `just check` passes
+- [ ] CSS Modules used for component styles
+- [ ] No prop drilling (consider context if needed)
+- [ ] Error handling with proper types
+
+## LLM-Friendly Guidelines
+
+When generating code:
+- Prefer explicit types over inference when it improves clarity
+- Use descriptive variable and function names
+- Add JSDoc comments for complex functions
+- Keep functions focused and single-purpose
+- Use discriminated unions for state machines and error handling
+- Validate external data at boundaries with Zod
+
+## Architecture Notes
+
+This is a **frontend-only** website (no SSR/BFF):
+- All business logic lives in the Rust backend (converge-core)
+- This site is purely presentational
+- API calls go directly to Rust API layer
+- No server-side TypeScript business logic

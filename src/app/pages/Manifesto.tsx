@@ -4,223 +4,177 @@ export function Manifesto() {
   return (
     <article className={styles.manifesto}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Why We Built Converge</h1>
-        <p className={styles.subtitle}>A Founder's Manifesto</p>
+        <h1 className={styles.title}>Converge — A Founder Manifesto</h1>
+        <p className={styles.subtitle}>Why Converge Exists</p>
       </header>
 
       <section className={styles.section}>
         <p className={styles.lead}>
-          We didn't start by trying to build an AI product.
+          Modern companies don't fail because they lack software.
           <br />
-          We started by trying to build something we could trust.
+          They fail because their software doesn't agree with itself.
+        </p>
+        <p>
+          CRM, billing, marketing, analytics, support, ops — all optimized in isolation.
+          Glued together with APIs, automations, and dashboards that look integrated but behave like separate worlds.
+        </p>
+        <p>
+          We added "AI agents" on top of this stack and called it progress.
+          What we got instead was drift:
+        </p>
+        <ul className={styles.list}>
+          <li>systems that act, but cannot explain;</li>
+          <li>automation that moves fast, but cannot halt safely;</li>
+          <li>intelligence that produces output, but no shared truth.</li>
+        </ul>
+        <p className={styles.emphasis}>
+          Converge exists because business systems need alignment, not more motion.
         </p>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>The problem we kept running into</h2>
-        <p>
-          Every serious attempt to build agent-based business systems eventually hits
-          the same wall.
-        </p>
-        <p>
-          You can prototype fast. You can "vibe code" workflows. You can wire together
-          APIs, SaaS tools, prompts, and models.
-        </p>
-        <p>
-          But the moment the system starts to matter—when decisions affect revenue,
-          customers, inventory, cash, or compliance—everything becomes fragile.
-        </p>
-        <ul className={styles.list}>
-          <li>Agents talk to each other in ways you can't fully explain.</li>
-          <li>State lives in too many places.</li>
-          <li>Retries, background jobs, and workflows hide failure modes.</li>
-          <li>You can't answer why a decision was made, only that it was made.</li>
-        </ul>
-        <p>
-          At that point, velocity turns into risk.
+        <h2 className={styles.sectionTitle}>The Core Belief</h2>
+        <p className={styles.emphasis}>
+          Converge starts from a simple, non-negotiable premise:
         </p>
         <p className={styles.emphasis}>
-          We've seen this before. This is exactly how large business systems became
-          brittle, expensive, and consultant-driven.
+          If a system cannot explain why it did something, it cannot be trusted to do it again.
         </p>
+        <p>So we didn't start with workflows.</p>
+        <p>We didn't start with UIs.</p>
+        <p>We didn't start with "agents talking to agents."</p>
+        <p>We started with a mathematically grounded core:</p>
+        <ul className={styles.list}>
+          <li>A single semantic authority per intent</li>
+          <li>Explicit convergence toward a fixed point</li>
+          <li>Shared context as the only source of truth</li>
+          <li>No hidden state, no background magic</li>
+          <li>Deterministic execution that can halt, explain itself, and resume safely</li>
+        </ul>
         <p>
-          Only now, the stakes are higher—because the systems are autonomous.
+          Agents are allowed to propose.
+          Only the system is allowed to decide.
+        </p>
+        <p className={styles.emphasis}>
+          That is not a limitation — it is the foundation.
         </p>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Software has changed. But foundations still matter.</h2>
-        <p>The old world assumed:</p>
-        <ul className={styles.list}>
-          <li>fixed workflows,</li>
-          <li>predefined objects,</li>
-          <li>"best practice" schemas,</li>
-          <li>and vendors telling you how your business should work.</li>
-        </ul>
-        <p>That model is breaking down.</p>
+        <h2 className={styles.sectionTitle}>Converge Is the Zone</h2>
         <p>
-          APIs are everywhere. Data is fragmented. Business logic is no longer static.
-          And AI has made decision-making itself programmable.
+          Converge is the zone where agents stop drifting and systems become explainable.
+        </p>
+        <p>
+          Being in the zone isn't a vibe — it's a mental state.
+          It's what happens when you stop fighting the system because you trust its foundations.
+        </p>
+        <p>
+          Like watching code scroll past in The Matrix, you don't need to read every instruction —
+          not because it's opaque, but because you understand the rules that govern it.
+        </p>
+        <p>
+          You trust the ride not because it feels fast,
+          but because you know it will halt, explain itself, and restart safely if needed.
         </p>
         <p className={styles.emphasis}>
-          But one thing hasn't changed: If you don't control the foundations,
-          you don't control the system.
-        </p>
-        <p>
-          We didn't want to build another layer of abstraction on top of chaos.
-          We wanted to build something that could converge.
+          That's the difference between spectacle and system.
         </p>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Why we started with a mathematically grounded core</h2>
-        <p>
-          Converge begins where most systems end: with guarantees.
-        </p>
-        <p>
-          Not promises. Not heuristics. Not "it usually works."
-        </p>
-        <p className={styles.emphasis}>Guarantees.</p>
+        <h2 className={styles.sectionTitle}>Why the Old Model Is Breaking</h2>
+        <p>Enterprise software was built for a world where:</p>
         <ul className={styles.list}>
-          <li>Deterministic convergence</li>
-          <li>Explicit authority</li>
-          <li>No hidden state</li>
-          <li>Explainable decisions</li>
-          <li>Idempotency derived from data, not flags</li>
-          <li>The same inputs always produce the same outcome</li>
+          <li>Business processes were static</li>
+          <li>Customization happened once, then froze</li>
+          <li>Consultants translated "how your business works" into brittle configuration</li>
         </ul>
-        <p>This is not accidental.</p>
-        <p>We deliberately chose:</p>
+        <p>That world is gone.</p>
+        <p>
+          APIs are everywhere.
+          Business models change quarterly.
+          And software is no longer written once — it is continuously shaped.
+        </p>
+        <p>
+          Yet companies are still sold systems that claim to fit everyone
+          and then require months (or millions) to be bent into place.
+        </p>
+        <p className={styles.emphasis}>
+          This is not a tooling problem.
+          It's an architectural one.
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>What Changes with Converge</h2>
+        <p>
+          Converge treats software as a living system, not a configured product.
+        </p>
         <ul className={styles.list}>
-          <li>Rust, not for performance alone, but for semantic precision</li>
-          <li>Types as authority boundaries</li>
-          <li>An append-only, monotonic view of truth</li>
-          <li>A model where agents suggest, but the system decides</li>
+          <li>You don't adapt your business to the system</li>
+          <li>You don't hard-code rules you'll regret later</li>
+          <li>You don't accept black-box automation</li>
+        </ul>
+        <p>Instead:</p>
+        <ul className={styles.list}>
+          <li>You express intent</li>
+          <li>Agents explore possibilities (LLMs, optimization solvers, pure Rust logic — all first-class)</li>
+          <li>The system converges on outcomes that are:</li>
+        </ul>
+        <ul className={styles.list}>
+          <li>explainable</li>
+          <li>auditable</li>
+          <li>reproducible</li>
+          <li>aligned with explicit constraints</li>
         </ul>
         <p className={styles.emphasis}>
-          Before building features, we proved axioms.
+          This is not "vibe coding on jelly."
+        </p>
+        <p className={styles.emphasis}>
+          It's vibe coding on bedrock — where experimentation is safe because the foundation does not move.
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>The Long Game</h2>
+        <p>
+          Converge begins as a semantic engine — an Agent OS for people who care about correctness.
+        </p>
+        <p className={styles.emphasis}>But the ambition is larger.</p>
+        <p>Over time, this foundation can absorb what today is fragmented across:</p>
+        <ul className={styles.list}>
+          <li>CRM</li>
+          <li>ERP</li>
+          <li>Campaign tools</li>
+          <li>RevOps systems</li>
+          <li>Inventory and sourcing</li>
+          <li>Financial coordination</li>
+        </ul>
+        <p>
+          Not by replacing them with another monolith —
+          but by replacing misalignment with convergence.
+        </p>
+        <p className={styles.emphasis}>
+          One shared context.
           <br />
-          Before layering ambition, we tested the bones.
-        </p>
-        <p>
-          Because once you allow ambiguity into the core, it never leaves.
-        </p>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Agents are not the product. Alignment is.</h2>
-        <p>Agents are easy to add. Alignment is not.</p>
-        <p>Most agent frameworks optimize for:</p>
-        <ul className={styles.list}>
-          <li>autonomy,</li>
-          <li>cleverness,</li>
-          <li>speed to demo.</li>
-        </ul>
-        <p>Converge optimizes for:</p>
-        <ul className={styles.list}>
-          <li>correctness,</li>
-          <li>traceability,</li>
-          <li>long-term system integrity.</li>
-        </ul>
-        <p>In Converge:</p>
-        <ul className={styles.list}>
-          <li>agents never talk to each other directly,</li>
-          <li>agents never mutate shared state,</li>
-          <li>agents never become authorities by accident.</li>
-        </ul>
-        <p>
-          They operate inside a convergence engine that enforces invariants
-          and makes every decision explainable.
-        </p>
-        <p className={styles.emphasis}>
-          This is how you scale agents without scaling chaos.
+          One source of truth.
+          <br />
+          Many agents.
+          <br />
+          Zero drift.
         </p>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>From engine to ambition</h2>
-        <p>
-          We are under no illusion that a core engine alone changes the world.
-        </p>
-        <p>The ambition is larger.</p>
-        <p>Growing companies today live in a fragmented landscape:</p>
-        <ul className={styles.list}>
-          <li>CRM over here</li>
-          <li>billing over there</li>
-          <li>inventory somewhere else</li>
-          <li>spreadsheets everywhere</li>
-          <li>consultants stitching it together at enormous cost</li>
-        </ul>
-        <p>
-          These systems weren't built for your business.
-          They were built to be sold to everyone.
-        </p>
-        <p>Converge takes a different path.</p>
-        <p>
-          We start with a rock-solid engine. Then we layer opinionated domains on top:
-        </p>
-        <ul className={styles.list}>
-          <li>sales alignment,</li>
-          <li>revenue protection,</li>
-          <li>cash-flow integrity,</li>
-          <li>inventory and sourcing,</li>
-          <li>operational guardrails.</li>
-        </ul>
-        <p className={styles.emphasis}>
-          Not as disconnected tools. As one converging system.
-        </p>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Vibe coding—on solid ground</h2>
-        <p>
-          We believe in fast iteration. We believe in direct expression.
-          We believe you should be able to shape systems to your reality.
-        </p>
-        <p className={styles.emphasis}>
-          But vibe coding on unstable foundations is just improvising on Jell-O.
-        </p>
-        <p>Converge is built so you can:</p>
-        <ul className={styles.list}>
-          <li>express intent freely,</li>
-          <li>evolve behavior continuously,</li>
-          <li>experiment safely,</li>
-        </ul>
-        <p>
-          without sacrificing correctness, trust, or explainability.
-        </p>
-        <p>
-          You don't need armies of consultants.
-          You don't need million-dollar implementations.
-          You don't need to contort your business to fit a tool.
-        </p>
-        <p className={styles.emphasis}>
-          You build your system—on a foundation that converges.
-        </p>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>What we're really building</h2>
-        <p>
-          Converge is not a chatbot. Not a workflow engine.
-          Not a replacement for every SaaS tool overnight.
-        </p>
-        <p>
-          It is a semantic convergence engine—and, over time,
-          an agent-native business operating system.
-        </p>
-        <p>One where:</p>
-        <ul className={styles.list}>
-          <li>decisions are first-class,</li>
-          <li>authority is explicit,</li>
-          <li>humans remain in the loop by design,</li>
-          <li>and systems grow more coherent over time, not less.</li>
-        </ul>
-        <p>This is a long journey. We're building it deliberately.</p>
+        <h2 className={styles.sectionTitle}>The Point</h2>
         <p className={styles.closing}>
-          Because the future of software isn't about smarter agents.
+          We don't believe the future belongs to louder AI.
           <br />
-          <strong>It's about systems you can trust.</strong>
+          <strong>It belongs to systems that know when to stop.</strong>
+          <br />
+          <br />
+          Converge is how we get there.
         </p>
       </section>
     </article>
