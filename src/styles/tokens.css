@@ -1,0 +1,67 @@
+/**
+ * Design tokens for converge.hey.sh
+ * Technical, precise aesthetic matching hey.sh workbench style
+ */
+
+:root {
+  /* Core palette */
+  --paper: #f5f4f0;
+  --ink: #111111;
+  --ink-secondary: #3a3a3a;
+  --ink-muted: #666666;
+
+  /* Structural */
+  --rule: #c8c6c0;
+  --rule-light: #dbd9d3;
+  --surface: #eae9e4;
+  --surface-hover: #e0dfda;
+
+  /* Accent - Converge green */
+  --accent: #2d5a3d;
+  --accent-light: #3d7a5d;
+
+  /* Status colors */
+  --status-success: #2d5a3d;
+  --status-warning: #6b5b3d;
+  --status-error: #5a3d3d;
+
+  /* Typography */
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Font sizes */
+  --text-xs: 0.65rem;
+  --text-sm: 0.75rem;
+  --text-base: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+
+  /* Transitions */
+  --transition-fast: 0.1s ease;
+  --transition-base: 0.15s ease;
+
+  /* Focus ring */
+  --focus-ring: 2px solid var(--ink);
+  --focus-offset: 2px;
+
+  /* Layout */
+  --max-width: 64rem;
+  --header-height: 3.5rem;
+}
