@@ -1,6 +1,8 @@
-# converge.hey.sh
+# converge.zone
 
 Website for the [Converge](https://github.com/kpernyer/converge-core) multi-agent runtime.
+
+**Live:** https://converge.zone
 
 ## Development
 
