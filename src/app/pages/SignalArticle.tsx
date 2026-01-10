@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { marked } from 'marked';
-import { getArticleBySlug } from '../data/articles';
+import { useArticle } from '../hooks/useSignals';
 import styles from './SignalArticle.module.css';
 
 function formatDate(dateString: string): string {
@@ -19,12 +19,43 @@ marked.setOptions({
 
 export function SignalArticle() {
   const { slug } = useParams<{ slug: string }>();
-  const article = slug ? getArticleBySlug(slug) : undefined;
+  const { state } = useArticle(slug);
 
-  if (!article) {
-    return <Navigate to="/signals" replace />;
+  if (state.status === 'idle' || state.status === 'loading') {
+    return (
+      <article className={styles.article}>
+        <nav className={styles.breadcrumb}>
+          <Link to="/signals" className={styles.backLink}>
+            ← Signals
+          </Link>
+        </nav>
+        <div className={styles.loading}>Loading article...</div>
+      </article>
+    );
   }
 
+  if (state.status === 'error') {
+    if (state.error === 'Article not found') {
+      return <Navigate to="/signals" replace />;
+    }
+    return (
+      <article className={styles.article}>
+        <nav className={styles.breadcrumb}>
+          <Link to="/signals" className={styles.backLink}>
+            ← Signals
+          </Link>
+        </nav>
+        <div className={styles.error}>
+          <p>Failed to load article: {state.error}</p>
+          <Link to="/signals" className={styles.backLink}>
+            ← Back to Signals
+          </Link>
+        </div>
+      </article>
+    );
+  }
+
+  const article = state.data;
   const htmlContent = marked(article.content);
 
   return (

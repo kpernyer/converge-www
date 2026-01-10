@@ -190,3 +190,20 @@
   padding-top: var(--space-8);
   border-top: 1px solid var(--rule-light);
 }
+
+.loading {
+  text-align: center;
+  color: var(--ink-muted);
+  padding: var(--space-12) 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.error {
+  text-align: center;
+  color: var(--ink-secondary);
+  padding: var(--space-8);
+  background: var(--surface);
+  border: 1px solid var(--rule-light);
+  border-radius: var(--radius-md);
+}

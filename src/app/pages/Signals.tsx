@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { getArticleIndex } from '../data/articles';
+import { useArticleIndex } from '../hooks/useSignals';
 import styles from './Signals.module.css';
 
 function formatDate(dateString: string): string {
@@ -11,7 +11,7 @@ function formatDate(dateString: string): string {
 }
 
 export function Signals() {
-  const articles = getArticleIndex();
+  const { state } = useArticleIndex();
 
   return (
     <div className={styles.page}>
@@ -23,38 +23,55 @@ export function Signals() {
         </p>
       </header>
 
-      <section className={styles.articles}>
-        {articles.map((article) => (
-          <article key={article.slug} className={styles.card}>
-            <Link to={`/signals/${article.slug}`} className={styles.cardLink}>
-              <div className={styles.cardContent}>
-                <div className={styles.meta}>
-                  <time dateTime={article.publishedAt}>
-                    {formatDate(article.publishedAt)}
-                  </time>
-                  <span className={styles.dot}>·</span>
-                  <span>{article.readingTime} min read</span>
-                </div>
-                <h2 className={styles.cardTitle}>{article.title}</h2>
-                {article.subtitle && (
-                  <p className={styles.cardSubtitle}>{article.subtitle}</p>
-                )}
-                <div className={styles.tags}>
-                  {article.tags.map((tag) => (
-                    <span key={tag} className={styles.tag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <span className={styles.arrow}>→</span>
-            </Link>
-          </article>
-        ))}
-      </section>
+      {state.status === 'loading' && (
+        <div className={styles.loading}>Loading articles...</div>
+      )}
 
-      {articles.length === 0 && (
-        <p className={styles.empty}>No signals yet. Check back soon.</p>
+      {state.status === 'error' && (
+        <div className={styles.error}>
+          <p>Failed to load articles: {state.error}</p>
+          {state.fallbackData && state.fallbackData.length > 0 && (
+            <p className={styles.fallbackNote}>Showing cached articles.</p>
+          )}
+        </div>
+      )}
+
+      {state.status === 'success' && (
+        <>
+          <section className={styles.articles}>
+            {state.data.map((article) => (
+              <article key={article.slug} className={styles.card}>
+                <Link to={`/signals/${article.slug}`} className={styles.cardLink}>
+                  <div className={styles.cardContent}>
+                    <div className={styles.meta}>
+                      <time dateTime={article.publishedAt}>
+                        {formatDate(article.publishedAt)}
+                      </time>
+                      <span className={styles.dot}>·</span>
+                      <span>{article.readingTime} min read</span>
+                    </div>
+                    <h2 className={styles.cardTitle}>{article.title}</h2>
+                    {article.subtitle && (
+                      <p className={styles.cardSubtitle}>{article.subtitle}</p>
+                    )}
+                    <div className={styles.tags}>
+                      {article.tags.map((tag) => (
+                        <span key={tag} className={styles.tag}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <span className={styles.arrow}>→</span>
+                </Link>
+              </article>
+            ))}
+          </section>
+
+          {state.data.length === 0 && (
+            <p className={styles.empty}>No signals yet. Check back soon.</p>
+          )}
+        </>
       )}
     </div>
   );

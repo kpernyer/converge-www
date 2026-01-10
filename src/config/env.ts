@@ -4,6 +4,10 @@ import { z } from 'zod';
 
 const EnvSchema = z.object({
   VITE_API_URL: z.string().url().default('http://localhost:8080'),
+  VITE_SIGNALS_BUCKET_URL: z
+    .string()
+    .url()
+    .default('https://storage.googleapis.com/converge-signals'),
 });
 
 type Env = z.infer<typeof EnvSchema>;
