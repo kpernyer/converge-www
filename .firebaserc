@@ -1,7 +1,6 @@
 {
   "projects": {
-    "default": "converge-hey-sh",
-    "converge-www": "converge-369ad"
+    "default": "converge-369ad"
   },
   "targets": {},
   "etags": {}
