@@ -1,5 +1,12 @@
 export { api, ConvergeApiError, ValidationError } from './client';
 export type {
+  // Enum types
+  ValidationCategory,
+  ValidationSeverity,
+  ServiceStatus,
+  HealthStatus,
+  ApiErrorCode,
+  // Object types
   JobRequest,
   JobResponse,
   JobMetadata,

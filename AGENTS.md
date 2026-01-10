@@ -93,6 +93,40 @@ export function Component({ title, onAction }: ComponentProps) {
 - Use Result-style returns for error handling
 - Never leak raw DTOs into UI components
 
+### Type Safety Pattern: Infer Types from Zod Schemas
+
+**Never duplicate type definitions.** All types must be inferred from Zod schemas to ensure runtime validation and compile-time types stay in sync:
+
+```typescript
+// src/api/schemas.ts - Define schemas with proper constraints
+import { z } from 'zod';
+
+// Use z.enum() for string literals with semantic meaning
+export const ValidationSeveritySchema = z.enum(['info', 'warning', 'error']);
+export const ApiErrorCodeSchema = z.enum(['bad_request', 'not_found', 'internal_error']);
+
+// Use number constraints for semantic values
+export const JobMetadataSchema = z.object({
+  cycles: z.number().int().nonnegative(),
+  duration_ms: z.number().nonnegative(),
+  confidence: z.number().min(0).max(1),
+});
+
+// Infer types at the bottom of schemas.ts
+export type ValidationSeverity = z.infer<typeof ValidationSeveritySchema>;
+export type JobMetadata = z.infer<typeof JobMetadataSchema>;
+
+// src/api/types.ts - Re-export from schemas (no manual interfaces)
+export type { ValidationSeverity, JobMetadata } from './schemas';
+```
+
+### Why This Pattern?
+
+1. **Single source of truth** - Change the schema, types update automatically
+2. **Runtime + compile-time safety** - Zod validates at runtime, TypeScript checks at compile-time
+3. **Semantic types** - `z.enum()` gives you literal unions, not `string`
+4. **Constraint enforcement** - `.int().nonnegative()` documents and enforces business rules
+
 ## Styling Guidelines
 
 - **CSS Modules** for component-scoped styles
