@@ -16,6 +16,9 @@ export function Header() {
           <Link to="/manifesto" className={styles.link}>
             Manifesto
           </Link>
+          <Link to="/signals" className={styles.link}>
+            Signals
+          </Link>
           <Link to="/domain" className={styles.link}>
             Domain
           </Link>

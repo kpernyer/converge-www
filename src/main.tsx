@@ -9,6 +9,8 @@ import { Provider } from '@/app/pages/Provider';
 import { Tools } from '@/app/pages/Tools';
 import { Manifesto } from '@/app/pages/Manifesto';
 import { Demo } from '@/app/pages/Demo';
+import { Signals } from '@/app/pages/Signals';
+import { SignalArticle } from '@/app/pages/SignalArticle';
 import '@/styles/reset.css';
 import '@/styles/tokens.css';
 import '@/styles/index.css';
@@ -25,6 +27,8 @@ createRoot(document.getElementById('root')!).render(
             <Route path="tools" element={<Tools />} />
             <Route path="manifesto" element={<Manifesto />} />
             <Route path="demo" element={<Demo />} />
+            <Route path="signals" element={<Signals />} />
+            <Route path="signals/:slug" element={<SignalArticle />} />
           </Route>
         </Routes>
       </BrowserRouter>
