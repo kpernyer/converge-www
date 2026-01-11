@@ -119,3 +119,40 @@
   border-radius: 3px;
   box-shadow: 0 1px 0 var(--rule-light);
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-6) 0;
+  }
+
+  .title {
+    font-size: var(--text-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-sm);
+  }
+
+  .selector {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .demoButton {
+    min-width: unset;
+    padding: var(--space-3);
+  }
+
+  .controls {
+    padding: var(--space-4);
+  }
+
+  .keyGrid {
+    gap: var(--space-3);
+  }
+
+  .key {
+    font-size: var(--text-xs);
+  }
+}
