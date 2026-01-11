@@ -103,3 +103,22 @@
 .card:hover .readMore {
   opacity: 0.8;
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .section {
+    padding: var(--space-10) 0;
+  }
+
+  .cardLink {
+    padding: var(--space-4);
+  }
+
+  .title {
+    font-size: var(--text-lg);
+  }
+
+  .subtitle {
+    font-size: var(--text-sm);
+  }
+}

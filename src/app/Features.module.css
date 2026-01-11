@@ -42,3 +42,22 @@
   color: var(--ink-secondary);
   line-height: 1.6;
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .features {
+    padding: var(--space-10) 0;
+  }
+
+  .title {
+    margin-bottom: var(--space-8);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
+}

@@ -58,3 +58,24 @@
   color: var(--ink-muted);
   background: transparent;
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .axioms {
+    padding: var(--space-10) 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .axiom {
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .formula {
+    font-size: var(--text-xs);
+    word-break: break-all;
+  }
+}

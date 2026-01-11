@@ -63,3 +63,33 @@
 .code code {
   color: var(--ink);
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .install {
+    padding: var(--space-10) 0;
+  }
+
+  .title {
+    margin-bottom: var(--space-8);
+  }
+
+  .step {
+    gap: var(--space-3);
+  }
+
+  .stepNumber {
+    font-size: var(--text-md);
+    min-width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .stepTitle {
+    font-size: var(--text-sm);
+  }
+
+  .code {
+    padding: var(--space-3);
+    font-size: var(--text-xs);
+  }
+}
