@@ -4,6 +4,17 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.0.1] - 2026-01-11
+
+### Fixed
+- **CLS on Signals page**: Eliminated layout shift by initializing with static data
+  - CLS reduced from 0.35 to 0.001
+  - Performance score improved from 67 to 92
+
+### Changed
+- `useArticleIndex` and `useArticle` hooks now initialize with static data immediately
+- Remote fetching is opt-in via `{ fetchRemote: true }` option
+
 ## [1.0.0] - 2026-01-11
 
 ### Added
