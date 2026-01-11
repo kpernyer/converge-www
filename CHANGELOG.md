@@ -4,6 +4,24 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.0] - 2026-01-11
+
+### Added
+- **New landing page tagline**: "Stop agent drift. Converge to an explainable result."
+- **Demo request flow**: Interactive terminal-style form for scheduling demos
+  - Posts to `api.converge.zone/demo-request`
+  - Animated agent initialization sequence
+- **SDR Funnel demo**: New primary demo showcasing lead qualification with invariants
+  - HITL barriers, consent rules, cost-aware routing
+  - Full provenance tracking on routing decisions
+
+### Changed
+- **Hero CTAs**: Replaced "Read the Docs" and "View Source" with:
+  - "Read the Manifesto" (primary)
+  - "See it in action" (secondary)
+  - "Set up a demo" (tertiary/accent)
+- **Demo page**: SDR Funnel now default demo, integrated demo request component
+
 ## [1.0.1] - 2026-01-11
 
 ### Fixed
