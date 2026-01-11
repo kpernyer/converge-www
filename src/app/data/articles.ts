@@ -7,7 +7,7 @@ export const articles: Article[] = [
     slug: 'agent-system-operating-system',
     title: 'What Makes an Agent System an Operating System',
     subtitle: 'Why Converge is an OS, not a framework',
-    author: 'Karl Pernyer',
+    author: 'Kenneth Pernyer',
     publishedAt: '2026-01-10T18:00:00Z',
     tags: ['operating-system', 'architecture', 'agents'],
     readingTime: 10,
@@ -260,7 +260,7 @@ But because the system finally behaves like what it is:
     slug: 'vibe-coding-to-verified-systems',
     title: 'From Vibe Coding to Verified Systems',
     subtitle: 'How to build on bedrock instead of Jell-O',
-    author: 'Karl Pernyer',
+    author: 'Kenneth Pernyer',
     publishedAt: '2026-01-10T16:00:00Z',
     tags: ['vibe-coding', 'verification', 'architecture'],
     readingTime: 5,
@@ -401,7 +401,7 @@ It will be built on:
     slug: 'context-is-the-api',
     title: 'Context Is the API: Why Agents Should Never Talk to Each Other',
     subtitle: 'The architectural foundation of convergent multi-agent systems',
-    author: 'Karl Pernyer',
+    author: 'Kenneth Pernyer',
     publishedAt: '2026-01-10T14:00:00Z',
     tags: ['context', 'agents', 'architecture'],
     readingTime: 6,
@@ -550,11 +550,11 @@ Everything else is noise.`,
     slug: 'evals-hidden-moat',
     title: 'Evals: The Hidden Moat of Convergent Systems',
     subtitle: 'Why evaluation frameworks are central to trustworthy agent systems',
-    author: 'Karl Pernyer',
+    author: 'Kenneth Pernyer',
     publishedAt: '2026-01-10T12:00:00Z',
     tags: ['evals', 'agents', 'architecture'],
     readingTime: 8,
-    featured: true,
+    featured: false,
     content: `In the early days of machine learning and autonomous agents, most teams focused on *getting models to output something plausible*. A thousand papers later, the real bottleneck isn't generating output — it's making sense of it.
 
 It's one thing for an agent to say *"This looks like a good strategy"*.
@@ -683,6 +683,66 @@ Converge treats evals as the contract between human intent and machine action. T
 **Evals are the moat.**
 
 And in a world of commoditized models, that moat is deeper than it looks.`,
+  },
+  {
+    slug: 'autonomous-agents-wrong-abstraction',
+    title: "Why 'Autonomous Agents' Are the Wrong Abstraction for Business Logic",
+    subtitle: 'Building business systems that can justify decisions, enforce constraints, and halt safely',
+    author: 'Kenneth Pernyer',
+    publishedAt: '2026-01-04T10:00:00Z',
+    tags: ['agents', 'business-logic', 'architecture'],
+    readingTime: 4,
+    featured: false,
+    content: `Correct me if I am wrong, but aren't we trying to build business systems on top of tools that were never designed to carry business authority? Agent frameworks are getting better at generating behaviour.
+
+But...
+
+**Businesses need systems that can justify decisions, enforce constraints and halt safely under ambiguity.**
+
+---
+
+Over the last months, I've been exploring how to build relevant agent-driven business systems for:
+
+- strategic alignment
+- CRM and growth decision logic
+- campaign orchestration
+- long-running business reasoning
+
+The kind of systems that need to be correct, auditable and stable under scale. I assumed existing agent frameworks would be a good starting point. They weren't! Optimised for prompt choreography, emergent behaviour and convenience. That's fine if you're exploring behaviour. It's not fine if you're building business infrastructure.
+
+---
+
+## The Systems Thinking Mindset
+
+My background leans heavily toward systems thinking and hard optimisation problems (think scheduling, routing, constraint solving). If you've worked with tools like Google's OR-Tools, you'll recognise the mental model:
+
+1. define state
+2. define constraints
+3. let the system converge
+4. inspect why it converged
+
+That mindset turns out to matter a lot when "agents" start influencing real business outcomes. I also didn't want to compromise on fundamentals: So I started building something from first principles, in Rust, where the type system is part of the semantic model.
+
+---
+
+## Introducing Converge
+
+The internal project I'm working on is called **Converge**. It's not an agent framework. It's a semantic engine:
+
+- Agents never talk to each other — they observe and propose changes to shared context
+- The engine enforces invariants, authority and convergence
+- LLMs suggest. They never decide
+- Humans are explicit authorities
+
+Everything either reaches a fixed point or halts explicitly. No queues. No hidden workflows. No "vibes" on Jell-O.
+
+---
+
+## The Problem Space
+
+I'm not sharing code yet, but if you're building serious GenAI products at fast-growing companies and you've felt the gap between reasoning demos and reliable systems...
+
+**...this is the problem space I'm spending most of my spare time in.**`,
   },
 ];
 
