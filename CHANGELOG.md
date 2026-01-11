@@ -4,6 +4,14 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.2.1] - 2026-01-11
+
+### Added
+- **Email notifications**: Demo requests now send email notifications via Resend
+  - Notifications sent to kenneth@aprio.one
+  - Includes name, email, and request ID
+  - Link to Firebase Console for viewing all requests
+
 ## [1.2.0] - 2026-01-11
 
 ### Added
