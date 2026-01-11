@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Converge Signals</title>
+    <link>https://converge.zone/signals</link>
+    <description>Dispatches from the convergence frontier — architecture, agents, and the systems that make them trustworthy.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Jan 2026 10:00:00 GMT</lastBuildDate>
+    <atom:link href="https://converge.zone/signals/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>What Makes an Agent System an Operating System</title>
+      <link>https://converge.zone/signals/agent-system-operating-system</link>
+      <guid isPermaLink="true">https://converge.zone/signals/agent-system-operating-system</guid>
+      <pubDate>Sun, 11 Jan 2026 10:00:00 GMT</pubDate>
+      <author>Kenneth Pernyer</author>
+      <description>This article is part of the Converge Manifesto series.
+If you haven&apos;t read the Manifesto yet, start there.
+This piece explains why those principles inevitably lead to an OS-level system. The word &quot;OS&quot; is overused — and mostly wrong</description>
+      <category>operating-system</category>
+      <category>architecture</category>
+      <category>agents</category>
+    </item>
+    <item>
+      <title>Evals: The Hidden Moat of Convergent Systems</title>
+      <link>https://converge.zone/signals/evals-hidden-moat</link>
+      <guid isPermaLink="true">https://converge.zone/signals/evals-hidden-moat</guid>
+      <pubDate>Sat, 10 Jan 2026 10:00:00 GMT</pubDate>
+      <author>Kenneth Pernyer</author>
+      <description>In the early days of machine learning and autonomous agents, most teams focused on getting models to output something plausible. A thousand papers later, the real bottleneck isn&apos;t generating output — it&apos;s making sense of it. It&apos;s one thing for an agent to say &quot;This looks like a good strategy&quot;.
+It...</description>
+      <category>evals</category>
+      <category>agents</category>
+      <category>architecture</category>
+    </item>
+    <item>
+      <title>From Vibe Coding to Verified Systems</title>
+      <link>https://converge.zone/signals/vibe-coding-to-verified-systems</link>
+      <guid isPermaLink="true">https://converge.zone/signals/vibe-coding-to-verified-systems</guid>
+      <pubDate>Thu, 08 Jan 2026 10:00:00 GMT</pubDate>
+      <author>Kenneth Pernyer</author>
+      <description>Vibe coding isn&apos;t the problem Let&apos;s say this clearly:</description>
+      <category>vibe-coding</category>
+      <category>verification</category>
+      <category>architecture</category>
+    </item>
+    <item>
+      <title>Context Is the API: Why Agents Should Never Talk to Each Other</title>
+      <link>https://converge.zone/signals/context-is-the-api</link>
+      <guid isPermaLink="true">https://converge.zone/signals/context-is-the-api</guid>
+      <pubDate>Tue, 06 Jan 2026 10:00:00 GMT</pubDate>
+      <author>Kenneth Pernyer</author>
+      <description>The intuition trap When people first build multi-agent systems, they almost always start the same way:</description>
+      <category>context</category>
+      <category>agents</category>
+      <category>architecture</category>
+    </item>
+    <item>
+      <title>Why &apos;Autonomous Agents&apos; Are the Wrong Abstraction for Business Logic</title>
+      <link>https://converge.zone/signals/autonomous-agents-wrong-abstraction</link>
+      <guid isPermaLink="true">https://converge.zone/signals/autonomous-agents-wrong-abstraction</guid>
+      <pubDate>Sun, 04 Jan 2026 10:00:00 GMT</pubDate>
+      <author>Kenneth Pernyer</author>
+      <description>Correct me if I am wrong, but aren&apos;t we trying to build business systems on top of tools that were never designed to carry business authority? Agent frameworks are getting better at generating behaviour. But...</description>
+      <category>agents</category>
+      <category>business-logic</category>
+      <category>architecture</category>
+    </item>
+  </channel>
+</rss>

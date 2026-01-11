@@ -21,6 +21,9 @@ export function Signals() {
           Dispatches from the convergence frontier — architecture, agents, and the
           systems that make them trustworthy.
         </p>
+        <a href="/signals/feed.xml" className={styles.rssLink}>
+          RSS Feed
+        </a>
       </header>
 
       {state.status === 'loading' && (
