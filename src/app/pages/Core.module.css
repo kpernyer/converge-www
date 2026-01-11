@@ -179,3 +179,58 @@
 .codeBlock code {
   color: var(--ink);
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-8) 0;
+  }
+
+  .title {
+    font-size: var(--text-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-md);
+  }
+
+  .section {
+    padding: var(--space-8) 0;
+  }
+
+  .sectionTitle {
+    font-size: var(--text-lg);
+  }
+
+  .axiom {
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .axiomNumber {
+    font-size: var(--text-md);
+    min-width: 1.5rem;
+  }
+
+  .axiomName {
+    font-size: var(--text-sm);
+  }
+
+  .conceptGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .concept {
+    padding: var(--space-4);
+  }
+
+  .codeBlock {
+    padding: var(--space-4);
+    font-size: var(--text-xs);
+    margin-left: calc(-1 * var(--space-4));
+    margin-right: calc(-1 * var(--space-4));
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}

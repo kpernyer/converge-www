@@ -393,3 +393,60 @@
 .codeBlock code {
   color: var(--ink);
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-8) 0;
+  }
+
+  .title {
+    font-size: var(--text-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-md);
+  }
+
+  .section {
+    padding: var(--space-8) 0;
+  }
+
+  .sectionTitle {
+    font-size: var(--text-lg);
+  }
+
+  .whyGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .whyCard {
+    padding: var(--space-4);
+  }
+
+  .editor {
+    min-height: 300px;
+  }
+
+  .dimensionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dimension {
+    padding: var(--space-4);
+  }
+
+  .issueGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .codeBlock {
+    padding: var(--space-4);
+    font-size: var(--text-xs);
+    margin-left: calc(-1 * var(--space-4));
+    margin-right: calc(-1 * var(--space-4));
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}

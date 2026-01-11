@@ -179,3 +179,55 @@
 .codeBlock code {
   color: var(--ink);
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-8) 0;
+  }
+
+  .title {
+    font-size: var(--text-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-md);
+  }
+
+  .patterns,
+  .useCases,
+  .example {
+    padding: var(--space-8) 0;
+  }
+
+  .sectionTitle {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-6);
+  }
+
+  .patternGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pattern {
+    padding: var(--space-3);
+  }
+
+  .itemGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .item {
+    padding: var(--space-4);
+  }
+
+  .codeBlock {
+    padding: var(--space-4);
+    font-size: var(--text-xs);
+    margin-left: calc(-1 * var(--space-4));
+    margin-right: calc(-1 * var(--space-4));
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
