@@ -2,11 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import type { Article, ArticleIndex } from '@/api/signals';
-import {
-  fetchArticleIndex,
-  fetchArticle,
-  isSignalsFetchError,
-} from '@/api/signalsClient';
+import { fetchArticleIndex, fetchArticle } from '@/api/signalsClient';
 import { articles as staticArticles, getArticleBySlug } from '../data/articles';
 
 type FetchState<T> =
@@ -17,31 +13,34 @@ type FetchState<T> =
 
 /**
  * Hook to fetch the article index with fallback to static data
+ *
+ * Initializes with static data immediately to prevent CLS (Cumulative Layout Shift).
+ * Optionally fetches remote data in the background for dynamic updates.
  */
-export function useArticleIndex() {
-  const [state, setState] = useState<FetchState<ArticleIndex>>({ status: 'idle' });
+export function useArticleIndex(options?: { fetchRemote?: boolean }) {
+  const { fetchRemote = false } = options ?? {};
+
+  // Initialize with static data to prevent layout shift
+  const [state, setState] = useState<FetchState<ArticleIndex>>({
+    status: 'success',
+    data: staticArticles,
+    source: 'static',
+  });
 
   const fetchIndex = useCallback(async () => {
-    setState({ status: 'loading' });
-
     const result = await fetchArticleIndex();
 
     if (result.ok) {
       setState({ status: 'success', data: result.value, source: 'remote' });
-    } else {
-      // Fall back to static data
-      console.warn('Failed to fetch article index, using static data:', result.error.message);
-      setState({
-        status: 'success',
-        data: staticArticles,
-        source: 'static',
-      });
     }
+    // On error, keep existing static data (no state change needed)
   }, []);
 
   useEffect(() => {
-    void fetchIndex();
-  }, [fetchIndex]);
+    if (fetchRemote) {
+      void fetchIndex();
+    }
+  }, [fetchRemote, fetchIndex]);
 
   return {
     state,
@@ -51,44 +50,41 @@ export function useArticleIndex() {
 
 /**
  * Hook to fetch a single article by slug with fallback to static data
+ *
+ * Initializes with static data immediately to prevent CLS (Cumulative Layout Shift).
+ * Optionally fetches remote data in the background for dynamic updates.
  */
-export function useArticle(slug: string | undefined) {
-  const [state, setState] = useState<FetchState<Article>>({ status: 'idle' });
+export function useArticle(slug: string | undefined, options?: { fetchRemote?: boolean }) {
+  const { fetchRemote = false } = options ?? {};
+
+  // Initialize with static data to prevent layout shift
+  const staticArticle = slug ? getArticleBySlug(slug) : undefined;
+  const [state, setState] = useState<FetchState<Article>>(() => {
+    if (!slug) {
+      return { status: 'error', error: 'No slug provided' };
+    }
+    if (staticArticle) {
+      return { status: 'success', data: staticArticle, source: 'static' };
+    }
+    return { status: 'error', error: 'Article not found' };
+  });
 
   const fetchArticleData = useCallback(async () => {
-    if (!slug) {
-      setState({ status: 'error', error: 'No slug provided' });
-      return;
-    }
-
-    setState({ status: 'loading' });
+    if (!slug) return;
 
     const result = await fetchArticle(slug);
 
     if (result.ok) {
       setState({ status: 'success', data: result.value, source: 'remote' });
-    } else {
-      // Fall back to static data
-      const staticArticle = getArticleBySlug(slug);
-
-      if (staticArticle) {
-        console.warn('Failed to fetch article, using static data:', result.error.message);
-        setState({
-          status: 'success',
-          data: staticArticle,
-          source: 'static',
-        });
-      } else if (isSignalsFetchError(result.error) && result.error.statusCode === 404) {
-        setState({ status: 'error', error: 'Article not found' });
-      } else {
-        setState({ status: 'error', error: result.error.message });
-      }
     }
+    // On error, keep existing static data (no state change needed)
   }, [slug]);
 
   useEffect(() => {
-    void fetchArticleData();
-  }, [fetchArticleData]);
+    if (fetchRemote && slug) {
+      void fetchArticleData();
+    }
+  }, [fetchRemote, slug, fetchArticleData]);
 
   return {
     state,
