@@ -4,6 +4,15 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.1] - 2026-01-11
+
+### Fixed
+- **Email delivery**: Changed notification recipient to Resend account email (kpernyer@gmail.com) until custom domain is verified
+- **Debug logging**: Removed verbose Resend API response logging from production
+
+### Changed
+- **Justfile**: Added Firebase commands (deploy-functions, deploy-hosting, logs, emulate, build-functions) and GitHub commands (release, releases, browse, prs, ci)
+
 ## [1.3.0] - 2026-01-11
 
 ### Security
