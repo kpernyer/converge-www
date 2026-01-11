@@ -4,9 +4,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from '@/app/components/ErrorBoundary';
 import { Layout } from '@/app/Layout';
 import { Home } from '@/app/pages/Home';
+import { Core } from '@/app/pages/Core';
 import { Domain } from '@/app/pages/Domain';
 import { Provider } from '@/app/pages/Provider';
 import { Tools } from '@/app/pages/Tools';
+import { Ledger } from '@/app/pages/Ledger';
 import { Manifesto } from '@/app/pages/Manifesto';
 import { Demo } from '@/app/pages/Demo';
 import { Signals } from '@/app/pages/Signals';
@@ -22,9 +24,11 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="core" element={<Core />} />
             <Route path="domain" element={<Domain />} />
             <Route path="provider" element={<Provider />} />
             <Route path="tools" element={<Tools />} />
+            <Route path="ledger" element={<Ledger />} />
             <Route path="manifesto" element={<Manifesto />} />
             <Route path="demo" element={<Demo />} />
             <Route path="signals" element={<Signals />} />
