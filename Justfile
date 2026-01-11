@@ -70,6 +70,29 @@ emulate:
 build-functions:
     cd functions && bun run build
 
+# === Git ===
+
+# View git status
+status:
+    git status
+
+# View recent commits
+log:
+    git log --oneline -10
+
+# Push to origin
+push:
+    git push
+
+# Create and push a tag (usage: just tag v1.3.2 "Description")
+tag version message:
+    git tag -a {{version}} -m "{{message}}"
+    git push origin {{version}}
+
+# List tags
+tags:
+    git tag -l --sort=-version:refname | head -10
+
 # === GitHub ===
 
 # Create a new release (usage: just release v1.3.0)
