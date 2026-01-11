@@ -4,6 +4,19 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.2.0] - 2026-01-11
+
+### Added
+- **Demo Request API**: Firebase Functions endpoint for demo requests
+  - `POST /demoRequest` stores requests in Firestore
+  - Input validation for name and email
+  - CORS enabled for cross-origin requests
+- **Firestore integration**: Database for storing demo requests
+
+### Infrastructure
+- Firebase Functions (Node.js 20, 2nd Gen)
+- Firestore rules and indexes
+
 ## [1.1.1] - 2026-01-11
 
 ### Changed

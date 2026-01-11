@@ -47,7 +47,7 @@ export function DemoRequest({ onClose }: DemoRequestProps) {
     await delay(400);
 
     try {
-      const response = await fetch('https://api.converge.zone/demo-request', {
+      const response = await fetch('https://us-central1-converge-369ad.cloudfunctions.net/demoRequest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name.trim(), email: email.trim() }),
