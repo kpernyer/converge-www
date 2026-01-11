@@ -4,6 +4,13 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.1] - 2026-01-11
+
+### Changed
+- **Navigation**: Added Demo link to header navigation
+- **Landing page**: Inline demo request form as primary CTA
+- **Hero**: Simplified CTAs (demo request form now inline below)
+
 ## [1.1.0] - 2026-01-11
 
 ### Added
