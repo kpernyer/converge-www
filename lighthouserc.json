@@ -1,11 +1,12 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": "./dist",
+      "startServerCommand": "npx serve -s dist -l 8080",
+      "startServerReadyPattern": "Accepting connections",
       "url": [
-        "http://localhost/",
-        "http://localhost/manifesto",
-        "http://localhost/signals"
+        "http://localhost:8080/",
+        "http://localhost:8080/manifesto",
+        "http://localhost:8080/signals"
       ],
       "numberOfRuns": 3
     },
