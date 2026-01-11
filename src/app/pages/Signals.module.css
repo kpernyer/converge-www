@@ -165,3 +165,40 @@
   color: var(--ink-muted);
   margin-top: var(--space-2);
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .page {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  .header {
+    padding: var(--space-8) 0;
+    margin-bottom: var(--space-6);
+  }
+
+  .title {
+    font-size: var(--text-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-sm);
+  }
+
+  .cardLink {
+    padding: var(--space-4);
+  }
+
+  .cardTitle {
+    font-size: var(--text-md);
+  }
+
+  .cardSubtitle {
+    font-size: var(--text-xs);
+  }
+
+  .arrow {
+    display: none;
+  }
+}
