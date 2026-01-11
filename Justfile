@@ -46,4 +46,48 @@ install:
 
 # Clean build artifacts
 clean:
-    rm -rf dist .firebase
+    rm -rf dist .firebase functions/lib
+
+# === Firebase ===
+
+# Deploy only Firebase Functions
+deploy-functions:
+    firebase deploy --only functions
+
+# Deploy only Firebase Hosting
+deploy-hosting:
+    firebase deploy --only hosting
+
+# View Firebase Functions logs
+logs:
+    firebase functions:log
+
+# Start Firebase emulators locally
+emulate:
+    firebase emulators:start
+
+# Build functions
+build-functions:
+    cd functions && bun run build
+
+# === GitHub ===
+
+# Create a new release (usage: just release v1.3.0)
+release version:
+    gh release create {{version}} --generate-notes
+
+# View recent releases
+releases:
+    gh release list
+
+# Open repo in browser
+browse:
+    gh repo view --web
+
+# View open PRs
+prs:
+    gh pr list
+
+# Check CI status
+ci:
+    gh run list --limit 5
