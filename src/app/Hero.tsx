@@ -21,9 +21,6 @@ export function Hero() {
         <Link to="/demo" className={styles.secondary}>
           See it in action
         </Link>
-        <Link to="/demo?request=true" className={styles.tertiary}>
-          Set up a demo
-        </Link>
       </div>
     </section>
   );

@@ -79,6 +79,9 @@ export function Header() {
           <Link to="/manifesto" className={styles.link} onClick={handleNavClick}>
             Manifesto
           </Link>
+          <Link to="/demo" className={styles.link} onClick={handleNavClick}>
+            Demo
+          </Link>
           <Link to="/signals" className={styles.link} onClick={handleNavClick}>
             Signals
           </Link>
