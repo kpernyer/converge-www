@@ -4,5 +4,6 @@ lib/
 # Node modules
 node_modules/
 
-# Local env files
+# Environment files (contain secrets)
+.env
 .env.local

@@ -4,6 +4,21 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.0] - 2026-01-11
+
+### Security
+- **XSS Protection**: Added DOMPurify to sanitize markdown HTML output
+- **Rate Limiting**: API endpoint now limits to 5 requests per hour per IP
+- **CORS Restriction**: API only accepts requests from converge.zone domains
+- **Input Validation**: RFC 5322 compliant email validation, length limits on name (100 chars) and email (254 chars)
+- **HTML Sanitization**: User input escaped in notification emails
+- **Security Headers**: Added X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy
+- **PII Protection**: Removed email addresses from server logs
+
+### Changed
+- **Environment Config**: Moved API endpoint URL and notification email to environment configuration
+- **Email Regex**: Improved email validation to be RFC 5322 compliant
+
 ## [1.2.1] - 2026-01-11
 
 ### Added

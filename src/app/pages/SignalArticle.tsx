@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { useArticle } from '../hooks/useSignals';
 import styles from './SignalArticle.module.css';
 
@@ -56,7 +57,7 @@ export function SignalArticle() {
   }
 
   const article = state.data;
-  const htmlContent = marked(article.content);
+  const htmlContent = DOMPurify.sanitize(marked(article.content) as string);
 
   return (
     <article className={styles.article}>

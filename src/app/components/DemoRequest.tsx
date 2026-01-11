@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { getEnv } from '@/config/env';
 import styles from './DemoRequest.module.css';
 
 type RequestState = 'idle' | 'submitting' | 'success' | 'error';
@@ -47,7 +48,7 @@ export function DemoRequest({ onClose }: DemoRequestProps) {
     await delay(400);
 
     try {
-      const response = await fetch('https://us-central1-converge-369ad.cloudfunctions.net/demoRequest', {
+      const response = await fetch(getEnv().VITE_DEMO_REQUEST_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name.trim(), email: email.trim() }),
