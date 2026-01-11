@@ -1,5 +1,5 @@
 import { onRequest } from 'firebase-functions/v2/https';
-import { defineSecret, defineString } from 'firebase-functions/params';
+import { defineSecret } from 'firebase-functions/params';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { Resend } from 'resend';
@@ -10,10 +10,9 @@ const db = getFirestore();
 
 // Define secrets and configuration
 const resendApiKey = defineSecret('RESEND_API_KEY');
-const notificationEmail = defineString('NOTIFICATION_EMAIL', {
-  default: 'notifications@converge.zone',
-  description: 'Email address to receive demo request notifications',
-});
+
+// Notification recipient (using Resend account email until domain is verified)
+const NOTIFICATION_EMAIL = 'kpernyer@gmail.com';
 
 // Constants
 // Using Resend's default sender until custom domain DKIM is configured
@@ -197,7 +196,7 @@ export const demoRequest = onRequest(
           email: email.trim(),
           id: docRef.id,
         },
-        notificationEmail.value()
+        NOTIFICATION_EMAIL
       );
 
       res.status(200).json({
