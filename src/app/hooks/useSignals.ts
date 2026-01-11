@@ -1,9 +1,12 @@
 // React hooks for fetching Signals articles
 
 import { useState, useEffect, useCallback } from 'react';
-import type { Article, ArticleIndex } from '@/api/signals';
-import { fetchArticleIndex, fetchArticle } from '@/api/signalsClient';
+import type { Article, ArticleIndex } from '@/api/signals.types';
 import { articles as staticArticles, getArticleBySlug } from '../data/articles';
+
+// Dynamic import for remote fetching (only loaded when needed)
+// This keeps zod, gray-matter, and signalsClient out of the main bundle
+const getSignalsClient = () => import('@/api/signalsClient');
 
 type FetchState<T> =
   | { status: 'idle' }
@@ -28,6 +31,7 @@ export function useArticleIndex(options?: { fetchRemote?: boolean }) {
   });
 
   const fetchIndex = useCallback(async () => {
+    const { fetchArticleIndex } = await getSignalsClient();
     const result = await fetchArticleIndex();
 
     if (result.ok) {
@@ -72,6 +76,7 @@ export function useArticle(slug: string | undefined, options?: { fetchRemote?: b
   const fetchArticleData = useCallback(async () => {
     if (!slug) return;
 
+    const { fetchArticle } = await getSignalsClient();
     const result = await fetchArticle(slug);
 
     if (result.ok) {

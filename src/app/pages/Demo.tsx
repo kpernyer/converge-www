@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Terminal } from '../components/Terminal';
+import { DemoRequest } from '../components/DemoRequest';
 import { demos } from '../data/demoContent';
 import styles from './Demo.module.css';
 
 export function Demo() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeDemo, setActiveDemo] = useState(demos[0]);
+  const [showDemoRequest, setShowDemoRequest] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get('request') === 'true') {
+      setShowDemoRequest(true);
+    }
+  }, [searchParams]);
+
+  const handleCloseDemoRequest = () => {
+    setShowDemoRequest(false);
+    setSearchParams({});
+  };
 
   return (
     <div className={styles.page}>
@@ -16,6 +31,12 @@ export function Demo() {
           Navigate with arrow keys, space/b for page up/down, or use the controls.
         </p>
       </header>
+
+      {showDemoRequest && (
+        <section className={styles.demoRequest}>
+          <DemoRequest onClose={handleCloseDemoRequest} />
+        </section>
+      )}
 
       <section className={styles.selector}>
         {demos.map((demo) => (
@@ -63,6 +84,18 @@ export function Demo() {
           </div>
         </div>
       </section>
+
+      {!showDemoRequest && (
+        <section className={styles.cta}>
+          <p className={styles.ctaText}>Want to see Converge in action with your use case?</p>
+          <button
+            className={styles.ctaButton}
+            onClick={() => setShowDemoRequest(true)}
+          >
+            Set up a demo
+          </button>
+        </section>
+      )}
     </div>
   );
 }

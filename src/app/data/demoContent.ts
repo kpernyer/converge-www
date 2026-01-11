@@ -1,3 +1,169 @@
+export const sdrFunnelDemo = `╔══════════════════════════════════════════════════════════════════════════════╗
+║          SDR FUNNEL - QUALIFY, ROUTE, AND LEARN WITHOUT DRIFT                ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Demonstrates how Converge handles lead qualification with strict invariants:
+  • HITL barriers for consent ambiguity
+  • Cost-aware routing (calls are expensive: €25 each)
+  • Full provenance on every routing decision
+  • Learning updates from past outcomes
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ROOT INTENT CONFIGURATION                                                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  Intent:    sdr.funnel.optimize
+  Budget:    llm_tokens=15000
+  Max Cycles: 20
+
+  WORKSPACE POLICIES:
+    ✓ no_spam
+    ✓ gdpr_safe_copy
+    ✓ brand_safe_language
+
+  COST CONSTRAINTS:
+    📞 Calls: €25 per call (expensive)
+    📧 Email: €0.02 per send
+    📅 Meeting: €15 scheduling cost
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ INVARIANTS (Compiled into Runtime Checks)                                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  RULE 1: Consent Barrier
+  ───────────────────────────────────────────────────────────────────────────
+    IF lead has "no_consent" AND "no_legitimate_interest"
+    THEN engine MUST halt with AwaitingAuthority "legal_review"
+    AND no outreach action may be emitted
+
+  RULE 2: Call Threshold
+  ───────────────────────────────────────────────────────────────────────────
+    IF lead_score < 0.70 OR confidence < 0.75
+    THEN engine MUST NOT emit action "place_call"
+
+  RULE 3: Provenance Requirement
+  ───────────────────────────────────────────────────────────────────────────
+    WHEN lead is routed to a motion
+    THEN routing_decision MUST contain:
+      • evidence
+      • rationale
+      • provenance_id
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ INBOUND LEAD                                                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  📥 NEW LEAD RECEIVED:
+    ID:      lead-1042
+    Company: NordicOps AB
+    Role:    Founder
+    Source:  website
+    Message: "Need help with CRM + billing"
+
+  📊 ENRICHMENT SOURCES AVAILABLE:
+    ✓ CRM enrichment
+    ✓ Email enrichment
+    ✓ Past outcomes from similar leads
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ CONVERGENCE EXECUTION                                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  Running engine.run()...
+  ─────────────────────────────────────────────────────────────────────────────
+
+  Cycle 1: LeadIngestionAgent processes inbound
+    + Fact: lead_raw (lead-1042, NordicOps AB, Founder)
+
+  Cycle 2: EnrichmentAgent queries CRM + email data
+    + Fact: enrichment_crm (company_size: 45, revenue: €2.1M)
+    + Fact: enrichment_email (domain_verified: true, role_confirmed: true)
+
+  Cycle 3: ProfileBuilderAgent constructs lead profile
+    + Fact: lead_profile
+      ├─ company_fit: 0.82
+      ├─ role_authority: HIGH
+      └─ timing_signal: STRONG
+
+  Cycle 4: QualificationAgent scores and qualifies
+    + Fact: qualification
+      ├─ score: 0.78
+      ├─ confidence: 0.85
+      └─ icp_match: true
+
+  Cycle 5: MotionGeneratorAgent proposes actions
+    + Fact: motion_options
+      ├─ [1] send_personal_email (cost: €0.02)
+      ├─ [2] schedule_meeting (cost: €15)
+      ├─ [3] nurture_sequence (cost: €0.10)
+      └─ [4] place_call (cost: €25)
+
+  Cycle 6: RoutingAgent evaluates cost vs. value
+    + Fact: routing_decision
+      ├─ action: schedule_meeting
+      ├─ rationale: "High authority founder, strong timing signal, 78% score"
+      ├─ evidence: [lead_profile, qualification, enrichment_crm]
+      └─ provenance_id: prov-1042-001
+
+  Cycle 7: LearningAgent updates model
+    + Fact: learning_update
+      └─ similar_leads_outcome_weight: +0.05
+
+  ─────────────────────────────────────────────────────────────────────────────
+  ✓ Converged in 7 cycles
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ INVARIANT CHECKS                                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  ✓ Consent Check: PASSED
+    └─ Source "website" implies legitimate interest
+
+  ✓ Call Threshold: NOT TRIGGERED
+    └─ score=0.78 ≥ 0.70, confidence=0.85 ≥ 0.75
+    └─ Call was eligible but not selected (meeting more cost-effective)
+
+  ✓ Provenance Check: PASSED
+    └─ routing_decision contains all required fields
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ FINAL ROUTING DECISION                                                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  🎯 RECOMMENDED ACTION: schedule_meeting
+
+  LEAD: lead-1042 (NordicOps AB)
+  ═══════════════════════════════════════════════════════════════════════════
+    Score:      78/100
+    Confidence: 85%
+    Cost:       €15 (vs €25 for call)
+
+  RATIONALE:
+    "High authority founder with strong timing signal. Meeting is more
+    cost-effective than call given 78% score. Email would be too passive
+    for a founder-level contact showing active buying signals."
+
+  EVIDENCE CHAIN:
+    lead_raw → enrichment_crm → lead_profile → qualification → routing_decision
+         ↓           ↓              ↓              ↓
+      source      company       fit score        final
+      website     €2.1M rev      0.82           0.78
+
+  PROVENANCE ID: prov-1042-001
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                              EXECUTION SUMMARY                                ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  Root Intent:     sdr.funnel.optimize                                        ║
+║  Cycles:          7                                                          ║
+║  Facts Produced:  8 (lead_profile, qualification, motion_options, etc.)      ║
+║  Invariants:      3 checked, 3 passed                                        ║
+║  HITL Barriers:   0 triggered                                                ║
+║  Final Action:    schedule_meeting (€15)                                     ║
+║  Convergence:     ✓ ACHIEVED                                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+`;
+
 export const growthStrategyDemo = `╔══════════════════════════════════════════════════════════════════════════════╗
 ║              CONVERGE GROWTH STRATEGY - LLM CONTAINMENT DEMO                 ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -246,6 +412,12 @@ Multi-warehouse routing with demand forecasting and cost optimization.
 `;
 
 export const demos = [
+  {
+    id: 'sdr-funnel',
+    title: 'SDR Funnel - Qualify, Route, and Learn',
+    description: 'Watch agents qualify leads, enforce consent rules, and route to cost-optimal actions with full provenance.',
+    content: sdrFunnelDemo,
+  },
   {
     id: 'growth-strategy',
     title: 'Growth Strategy with LLM Containment',

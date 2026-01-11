@@ -15,6 +15,9 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
           markdown: ['marked'],
+          // gray-matter is only used for remote fetching (currently disabled)
+          // Keep it separate so it doesn't bloat the main bundle
+          'frontmatter': ['gray-matter'],
         },
       },
     },

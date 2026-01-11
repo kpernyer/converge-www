@@ -1,6 +1,6 @@
 // Static articles data (will be replaced with GCS fetch)
 
-import type { Article } from '@/api/signals';
+import type { Article } from '@/api/signals.types';
 
 export const articles: Article[] = [
   {

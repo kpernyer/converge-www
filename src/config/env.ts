@@ -1,46 +1,29 @@
-// Environment variables validation
+// Environment variables with defaults
+// Simplified to avoid bundling Zod (~68KB) for just 2 variables
 
-import { z } from 'zod';
-
-const EnvSchema = z.object({
-  VITE_API_URL: z.string().url().default('http://localhost:8080'),
-  VITE_SIGNALS_BUCKET_URL: z
-    .string()
-    .url()
-    .default('https://storage.googleapis.com/converge-signals'),
-});
-
-type Env = z.infer<typeof EnvSchema>;
-
-let validatedEnv: Env | null = null;
-
-/**
- * Format Zod validation errors into a readable string.
- */
-function formatZodErrors(error: z.ZodError): string {
-  return error.issues
-    .map((issue) => {
-      const path = issue.path.map(String).join('.');
-      return path ? `${path}: ${issue.message}` : issue.message;
-    })
-    .join(', ');
+interface Env {
+  VITE_API_URL: string;
+  VITE_SIGNALS_BUCKET_URL: string;
 }
 
+const defaults: Env = {
+  VITE_API_URL: 'http://localhost:8080',
+  VITE_SIGNALS_BUCKET_URL: 'https://storage.googleapis.com/converge-signals',
+};
+
+let cachedEnv: Env | null = null;
+
 /**
- * Get validated environment variables.
- * Validates once and caches the result.
+ * Get environment variables with defaults.
+ * Caches the result for subsequent calls.
  */
 export function getEnv(): Env {
-  if (validatedEnv === null) {
-    const parseResult = EnvSchema.safeParse(import.meta.env);
-
-    if (!parseResult.success) {
-      const errorMessages = formatZodErrors(parseResult.error);
-      throw new Error(`Invalid environment variables: ${errorMessages}`);
-    }
-
-    validatedEnv = parseResult.data;
+  if (cachedEnv === null) {
+    cachedEnv = {
+      VITE_API_URL: (import.meta.env.VITE_API_URL as string) || defaults.VITE_API_URL,
+      VITE_SIGNALS_BUCKET_URL:
+        (import.meta.env.VITE_SIGNALS_BUCKET_URL as string) || defaults.VITE_SIGNALS_BUCKET_URL,
+    };
   }
-
-  return validatedEnv;
+  return cachedEnv;
 }

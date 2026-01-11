@@ -1,0 +1,157 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-8) 0;
+}
+
+.terminal {
+  width: 100%;
+  max-width: 600px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: #2a2a2a;
+  border-bottom: 1px solid #333;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.buttonRed,
+.buttonYellow,
+.buttonGreen {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.buttonRed {
+  background: #ff5f56;
+  cursor: pointer;
+}
+
+.buttonRed:hover {
+  background: #ff3b30;
+}
+
+.buttonYellow {
+  background: #ffbd2e;
+}
+
+.buttonGreen {
+  background: #27c93f;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: #888;
+}
+
+.spacer {
+  width: 52px;
+}
+
+.content {
+  padding: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: #e0e0e0;
+  min-height: 280px;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  line-height: 1.6;
+}
+
+.prompt {
+  color: #27c93f;
+  font-weight: 600;
+}
+
+.command {
+  color: #6ec1e4;
+}
+
+.label {
+  color: #888;
+}
+
+.value {
+  color: #e0e0e0;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #444;
+  color: #e0e0e0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: var(--space-1) 0;
+  outline: none;
+  flex: 1;
+  max-width: 300px;
+}
+
+.input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.input::placeholder {
+  color: #555;
+}
+
+.pending {
+  color: #555;
+  margin-right: var(--space-1);
+}
+
+.success {
+  color: #27c93f;
+  margin-right: var(--space-1);
+}
+
+.successText {
+  color: #27c93f;
+}
+
+.error {
+  color: #ff5f56;
+  margin-right: var(--space-1);
+}
+
+.errorText {
+  color: #ff5f56;
+}
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .container {
+    padding: var(--space-4);
+  }
+
+  .content {
+    padding: var(--space-4);
+    font-size: var(--text-xs);
+  }
+
+  .input {
+    font-size: var(--text-xs);
+  }
+}

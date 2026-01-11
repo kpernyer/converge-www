@@ -3,13 +3,8 @@
 import matter from 'gray-matter';
 import { z } from 'zod';
 import { type Result, ok, err } from './result';
-import {
-  ArticleSchema,
-  ArticleIndexSchema,
-  type Article,
-  type ArticleMeta,
-  type ArticleIndex,
-} from './signals';
+import { ArticleSchema, ArticleIndexSchema } from './signals';
+import type { Article, ArticleMeta, ArticleIndex } from './signals.types';
 import { getEnv } from '../config/env';
 
 // Error types

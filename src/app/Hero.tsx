@@ -1,11 +1,13 @@
+import { Link } from 'react-router-dom';
 import styles from './Hero.module.css';
 
 export function Hero() {
   return (
     <section className={styles.hero}>
-      <p className={styles.tagline}>Correctness-first multi-agent runtime</p>
       <h1 className={styles.title}>
-        The engine is not built on jelly.
+        Stop agent drift.
+        <br />
+        Converge to an explainable result.
       </h1>
       <p className={styles.subtitle}>
         A formally proven multi-agent runtime with 9 axioms guaranteeing
@@ -13,15 +15,15 @@ export function Hero() {
         Context is everything.
       </p>
       <div className={styles.cta}>
-        <a href="https://docs.rs/converge-core" className={styles.primary}>
-          Read the Docs
-        </a>
-        <a href="https://github.com/kpernyer/converge-core" className={styles.secondary}>
-          View Source
-        </a>
-      </div>
-      <div className={styles.version}>
-        <code>converge-core = "0.5"</code>
+        <Link to="/manifesto" className={styles.primary}>
+          Read the Manifesto
+        </Link>
+        <Link to="/demo" className={styles.secondary}>
+          See it in action
+        </Link>
+        <Link to="/demo?request=true" className={styles.tertiary}>
+          Set up a demo
+        </Link>
       </div>
     </section>
   );
