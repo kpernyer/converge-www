@@ -16,7 +16,7 @@ const notificationEmail = defineString('NOTIFICATION_EMAIL', {
 });
 
 // Constants
-const FROM_EMAIL = 'Converge <notifications@converge.zone>';
+const FROM_EMAIL = 'Converge <converge@hey.sh>';
 const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 254;
 const RATE_LIMIT_WINDOW_MS = 3600000; // 1 hour
