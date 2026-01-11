@@ -27,6 +27,7 @@
   font-weight: 600;
   font-size: var(--text-md);
   color: var(--ink);
+  z-index: 102;
 }
 
 .logoMark {
@@ -37,6 +38,59 @@
   letter-spacing: -0.02em;
 }
 
+/* Mobile menu button */
+.mobileMenuBtn {
+  display: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 102;
+}
+
+.hamburger {
+  display: block;
+  position: relative;
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  transition: background var(--transition-fast);
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  transition: transform var(--transition-fast);
+}
+
+.hamburger::before {
+  top: -6px;
+}
+
+.hamburger::after {
+  top: 6px;
+}
+
+.mobileMenuBtn[aria-expanded="true"] .hamburger {
+  background: transparent;
+}
+
+.mobileMenuBtn[aria-expanded="true"] .hamburger::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.mobileMenuBtn[aria-expanded="true"] .hamburger::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Navigation */
 .nav {
   display: flex;
   align-items: center;
@@ -123,4 +177,88 @@
 .dropdownDesc {
   font-size: var(--text-xs);
   color: var(--ink-muted);
+}
+
+/* Overlay */
+.overlay {
+  display: none;
+}
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .mobileMenuBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 80vw;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: calc(var(--header-height) + var(--space-4)) var(--space-6) var(--space-6);
+    background: var(--paper);
+    border-left: 1px solid var(--rule-light);
+    transform: translateX(100%);
+    transition: transform 0.2s ease;
+    z-index: 101;
+    overflow-y: auto;
+  }
+
+  .navOpen {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+  }
+
+  .link {
+    font-size: var(--text-md);
+    padding: var(--space-3) 0;
+    width: 100%;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .dropdownTrigger {
+    font-size: var(--text-md);
+    padding: var(--space-3) 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .dropdownMenu {
+    position: static;
+    transform: none;
+    width: 100%;
+    min-width: unset;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    padding-left: var(--space-4);
+    margin-top: var(--space-1);
+    background: transparent;
+  }
+
+  .dropdownItem {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .dropdownName {
+    font-size: var(--text-sm);
+  }
 }
