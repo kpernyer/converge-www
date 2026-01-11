@@ -4,6 +4,14 @@ All notable changes to the Converge website will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.2] - 2026-01-11
+
+### Added
+- **Dynamic version display**: Package versions now read from source files at build time
+  - Rust crate versions from `../converge/Cargo.toml`
+  - Elixir hex version from `../converge-ledger/mix.exs`
+  - Affects Install, Core, Provider, Domain, Tools, and Ledger pages
+
 ## [1.3.1] - 2026-01-11
 
 ### Fixed
