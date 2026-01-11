@@ -1,4 +1,5 @@
 import styles from './Provider.module.css';
+import { CONVERGE_PROVIDER_VERSION } from '../../versions';
 
 const providers = [
   { name: 'Anthropic', models: 'Claude 3.5 Sonnet, Haiku, Opus', status: 'stable' },
@@ -63,7 +64,7 @@ export function Provider() {
 
       <section className={styles.install}>
         <pre className={styles.code}>
-          <code>converge-provider = "0.2"</code>
+          <code>{`converge-provider = "${CONVERGE_PROVIDER_VERSION}"`}</code>
         </pre>
       </section>
 

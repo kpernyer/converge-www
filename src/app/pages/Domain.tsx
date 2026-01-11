@@ -1,4 +1,5 @@
 import styles from './Domain.module.css';
+import { CONVERGE_DOMAIN_VERSION } from '../../versions';
 
 const useCases = [
   {
@@ -110,7 +111,7 @@ export function Domain() {
 
       <section className={styles.install}>
         <pre className={styles.code}>
-          <code>converge-domain = "0.2"</code>
+          <code>{`converge-domain = "${CONVERGE_DOMAIN_VERSION}"`}</code>
         </pre>
       </section>
 

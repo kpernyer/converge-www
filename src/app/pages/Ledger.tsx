@@ -1,4 +1,5 @@
 import styles from './Ledger.module.css';
+import { CONVERGE_LEDGER_VERSION } from '../../versions';
 
 const features = [
   {
@@ -62,7 +63,7 @@ export function Ledger() {
         <div className={styles.codeGroup}>
           <span className={styles.codeLabel}>mix.exs</span>
           <pre className={styles.code}>
-            <code>{`{:converge_ledger, "~> 0.1"}`}</code>
+            <code>{`{:converge_ledger, "~> ${CONVERGE_LEDGER_VERSION}"}`}</code>
           </pre>
         </div>
         <div className={styles.links}>

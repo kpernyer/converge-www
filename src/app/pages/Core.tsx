@@ -1,4 +1,5 @@
 import styles from './Core.module.css';
+import { CONVERGE_CORE_VERSION } from '../../versions';
 
 const axioms = [
   { number: 1, name: 'Context Immutability', description: 'Context is append-only. No mutation, no surprises.' },
@@ -60,7 +61,7 @@ export function Core() {
 
       <section className={styles.install}>
         <pre className={styles.code}>
-          <code>converge-core = "0.5"</code>
+          <code>{`converge-core = "${CONVERGE_CORE_VERSION}"`}</code>
         </pre>
         <div className={styles.links}>
           <a href="https://docs.rs/converge-core" className={styles.externalLink}>

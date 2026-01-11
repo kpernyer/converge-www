@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useValidateRules } from '../hooks/useValidateRules';
+import { CONVERGE_TOOL_VERSION } from '../../versions';
 import styles from './Tools.module.css';
 
 const exampleRule = `Feature: Order Processing
@@ -68,7 +69,7 @@ export function Tools() {
 
       <section className={styles.install}>
         <pre className={styles.code}>
-          <code>converge-tool = "0.2"</code>
+          <code>{`converge-tool = "${CONVERGE_TOOL_VERSION}"`}</code>
         </pre>
       </section>
 

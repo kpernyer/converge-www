@@ -1,4 +1,5 @@
 import styles from './Install.module.css';
+import { CONVERGE_CORE_VERSION } from '../versions';
 
 export function Install() {
   return (
@@ -11,7 +12,7 @@ export function Install() {
             <h3 className={styles.stepTitle}>Add to Cargo.toml</h3>
             <pre className={styles.code}>
               <code>{`[dependencies]
-converge-core = "0.5"`}</code>
+converge-core = "${CONVERGE_CORE_VERSION}"`}</code>
             </pre>
           </div>
         </div>
