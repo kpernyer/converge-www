@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { DemoRequest } from './components/DemoRequest';
 import styles from './Hero.module.css';
 
 export function Hero() {
@@ -14,14 +14,7 @@ export function Hero() {
         deterministic convergence. No hidden state. No starvation.
         Context is everything.
       </p>
-      <div className={styles.cta}>
-        <Link to="/manifesto" className={styles.primary}>
-          Read the Manifesto
-        </Link>
-        <Link to="/demo" className={styles.secondary}>
-          See it in action
-        </Link>
-      </div>
+      <DemoRequest />
     </section>
   );
 }
