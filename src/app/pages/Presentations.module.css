@@ -1,0 +1,214 @@
+.page {
+  padding-bottom: var(--space-16);
+}
+
+.header {
+  text-align: center;
+  padding: var(--space-12) 0;
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: var(--text-lg);
+  color: var(--ink-secondary);
+  max-width: 40rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.section {
+  padding: var(--space-12) 0;
+  border-top: 1px solid var(--rule-light);
+}
+
+.sectionTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+
+.sectionDescription {
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-6);
+  max-width: 48rem;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-6);
+}
+
+.card {
+  border: 1px solid var(--rule-light);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--rule-light);
+  background: var(--paper);
+}
+
+.cardTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: 0;
+}
+
+.cardMeta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+}
+
+.cardDescription {
+  flex: 1;
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--rule-light);
+  background: var(--paper);
+}
+
+.audience {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.viewBtn,
+.downloadBtn {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-4);
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.viewBtn {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+}
+
+.viewBtn:hover {
+  background: var(--ink-secondary);
+  border-color: var(--ink-secondary);
+}
+
+.downloadBtn {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+
+.downloadBtn:hover {
+  background: var(--surface);
+}
+
+.codeBlock {
+  background: var(--surface);
+  border: 1px solid var(--rule-light);
+  padding: var(--space-6);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.codeBlock code {
+  color: var(--ink);
+}
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-8) 0;
+  }
+
+  .title {
+    font-size: var(--text-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-md);
+  }
+
+  .section {
+    padding: var(--space-8) 0;
+  }
+
+  .sectionTitle {
+    font-size: var(--text-lg);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .card {
+    margin-left: calc(-1 * var(--space-4));
+    margin-right: calc(-1 * var(--space-4));
+    border-left: none;
+    border-right: none;
+  }
+
+  .cardHeader,
+  .cardDescription,
+  .cardFooter {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  .codeBlock {
+    padding: var(--space-4);
+    font-size: var(--text-xs);
+    margin-left: calc(-1 * var(--space-4));
+    margin-right: calc(-1 * var(--space-4));
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}

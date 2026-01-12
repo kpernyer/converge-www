@@ -181,9 +181,9 @@ This demo shows how Converge handles LLM outputs safely:
   AGENTS:
     [Human(0)] NordicMarketSeedAgent: ∅ → Seeds
     [Human(1)] PricingSeedAgent: ∅ → Seeds
-    [LLM(2)] LlmSignalAgent: Seeds → Proposals (untrusted)
-    [LLM(3)] LlmHypothesisAgent: Signals → Proposals (untrusted)
-    [Validator(4)] ValidationAgent: Proposals → Signals/Hypotheses (trusted)
+    [LLM(2)] LlmSignalAgent: Seeds → ProposedFacts (untrusted)
+    [LLM(3)] LlmHypothesisAgent: Signals → ProposedFacts (untrusted)
+    [Validator(4)] ValidationAgent: ProposedFacts → Trusted Context (Facts)
     [Agent(5)] SignalToCompetitorAgent: Signals → Competitors
     [Agent(6)] StrategyAgent: Competitors → Strategies
     [Agent(7)] EvaluationAgent: Strategies → Evaluations
@@ -200,11 +200,11 @@ This demo shows how Converge handles LLM outputs safely:
 └──────────────────────────────────────────────────────────────────────────────┘
 
   Expected cycle progression:
-    Cycle 1: SeedAgents emit seeds
-    Cycle 2: LlmSignalAgent proposes signals
-    Cycle 3: ValidationAgent filters signals
-    Cycle 4: LlmHypothesisAgent proposes hypotheses
-    Cycle 5: ValidationAgent filters hypotheses
+    Cycle 1: SeedAgents emit seeds (Trusted Facts)
+    Cycle 2: LlmSignalAgent emits ProposedFacts
+    Cycle 3: ValidationAgent promotes ProposedFacts to Facts
+    Cycle 4: LlmHypothesisAgent emits ProposedFacts
+    Cycle 5: ValidationAgent promotes ProposedFacts to Facts
     Cycle 6: SignalToCompetitorAgent creates profiles
     Cycle 7: StrategyAgent proposes strategies
     Cycle 8: EvaluationAgent scores strategies
@@ -212,11 +212,11 @@ This demo shows how Converge handles LLM outputs safely:
 
   Running engine.run()...
   ─────────────────────────────────────────────────────────────────────────────
-  Cycle 1: 2 agents ran, 4 facts added
-  Cycle 2: 1 agent ran, 5 proposals added
-  Cycle 3: 1 agent ran, 3 signals promoted, 2 rejected
-  Cycle 4: 1 agent ran, 3 proposals added
-  Cycle 5: 1 agent ran, 2 hypotheses promoted, 1 rejected
+  Cycle 1: 2 agents ran, 4 Facts added
+  Cycle 2: 1 agent ran, 5 ProposedFacts added
+  Cycle 3: 1 agent ran, 3 Facts promoted, 2 ProposedFacts rejected
+  Cycle 4: 1 agent ran, 3 ProposedFacts added
+  Cycle 5: 1 agent ran, 2 Facts promoted, 1 ProposedFact rejected
   Cycle 6: 1 agent ran, 2 competitors added
   Cycle 7: 1 agent ran, 3 strategies added
   ─────────────────────────────────────────────────────────────────────────────
@@ -226,7 +226,7 @@ This demo shows how Converge handles LLM outputs safely:
 │ LLM PROPOSAL ANALYSIS                                                        │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-  LLM Proposals Submitted: 8
+  ProposedFacts Submitted: 8
   ───────────────────────────────────────────────────────────────────────────
     • signals:llm-signal-nordic-trend
     • signals:llm-signal-competition
@@ -237,11 +237,10 @@ This demo shows how Converge handles LLM outputs safely:
     • hypotheses:llm-hyp-channel-opportunity
     • hypotheses:llm-hyp-anonymous
 
-  Validation Results:
+  Promotion Workflow (ValidationAgent):
   ───────────────────────────────────────────────────────────────────────────
-    ✓ Accepted Signals: 3
-    ✓ Accepted Hypotheses: 2
-    ✗ Rejected: 3
+    ✓ Promoted to Fact: 5
+    ✗ Rejected Proposal: 3
 
   ACCEPTED (Promoted to Trusted Context):
   ───────────────────────────────────────────────────────────────────────────
@@ -306,12 +305,12 @@ This demo shows how Converge handles LLM outputs safely:
 
   Every fact in the final output has a verifiable trust chain:
 
-    Seeds (Human)
-      └─→ LLM Proposals (Untrusted)
+    Seeds (Trusted Facts)
+      └─→ ProposedFacts (Untrusted)
             └─→ ValidationAgent (Gateway)
-                  ├─→ Accepted → Signals/Hypotheses (Trusted)
+                  ├─→ Promoted → Facts (Trusted)
                   └─→ Rejected → Audit Trail
-                        └─→ Competitors (Derived from Trusted)
+                        └─→ Competitors (Derived from Facts)
                               └─→ Strategies (Derived)
                                     └─→ Evaluations (Final)
 

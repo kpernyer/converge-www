@@ -3,17 +3,17 @@ import { useValidateRules } from '../hooks/useValidateRules';
 import { CONVERGE_TOOL_VERSION } from '../../versions';
 import styles from './Tools.module.css';
 
-const exampleRule = `Feature: Order Processing
+const exampleRule = `Truth: Order Processing
   Business rules for order fulfillment
 
-  Rule: Orders above $100 get free shipping
+  Scenario: Orders above $100 get free shipping
     Given a customer with a valid account
     And an order with items totaling $150
     When the order is submitted
     Then shipping cost should be $0
     And the order status should be "confirmed"
 
-  Rule: Inventory must be reserved before confirmation
+  Scenario: Inventory must be reserved before confirmation
     Given a product with 5 units in stock
     And an order requesting 3 units
     When the order is confirmed
@@ -60,10 +60,10 @@ export function Tools() {
     <div className={styles.page}>
       <header className={styles.header}>
         <p className={styles.tagline}>converge-tool</p>
-        <h1 className={styles.title}>Converge Rules</h1>
+        <h1 className={styles.title}>Converge Truths</h1>
         <p className={styles.subtitle}>
-          Define business rules in a structured, verifiable format.
-          Based on Gherkin syntax, optimized for agent-driven automation.
+          Declare what must be true in a structured, verifiable format.
+          Express your business reality. Let the engine make it so.
         </p>
       </header>
 
@@ -74,13 +74,13 @@ export function Tools() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Why "Converge Rules"?</h2>
+        <h2 className={styles.sectionTitle}>Why "Converge Truths"?</h2>
         <div className={styles.whyGrid}>
           <div className={styles.whyCard}>
             <h3 className={styles.whyTitle}>Not BDD Testing</h3>
             <p className={styles.whyDescription}>
-              Traditional Gherkin is for behavior-driven testing. Converge Rules
-              define business logic that agents execute directly.
+              Traditional specs are for testing. Converge Truths
+              declare business reality that agents make true.
             </p>
           </div>
           <div className={styles.whyCard}>
@@ -101,15 +101,15 @@ export function Tools() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Rule Editor</h2>
+        <h2 className={styles.sectionTitle}>Truth Editor</h2>
         <p className={styles.sectionDescription}>
-          Write Converge Rules and validate them. Enable LLM validation for
+          Write Converge Truths and validate them. Enable LLM validation for
           deep business sense and compilability checks.
         </p>
         <div className={styles.editor}>
           <div className={styles.editorPane}>
             <div className={styles.editorHeader}>
-              <span>rules.feature</span>
+              <span>rules.truth</span>
               <div className={styles.editorActions}>
                 <label className={styles.llmToggle}>
                   <input
@@ -245,13 +245,12 @@ let provider = AnthropicProvider::from_env("claude-3-5-haiku-20241022")?;
 let config = ValidationConfig::default();
 let validator = GherkinValidator::new(provider, config);
 
-// Parse and validate a feature file
-let feature = gherkin::parse_feature(feature_text)?;
-let report = validator.validate_feature(&feature)?;
+// Parse and validate a .truth file (Truth: syntax supported)
+let report = validator.validate_file("specs/money.truth")?;
 
 // Check results
 if report.is_valid() {
-    println!("Rules are valid!");
+    println!("Truths are valid!");
 } else {
     for issue in report.issues {
         println!("{}: {}", issue.severity, issue.message);

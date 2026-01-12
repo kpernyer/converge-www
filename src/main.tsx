@@ -18,6 +18,7 @@ const Manifesto = lazy(() => import('@/app/pages/Manifesto').then((m) => ({ defa
 const Demo = lazy(() => import('@/app/pages/Demo').then((m) => ({ default: m.Demo })));
 const Signals = lazy(() => import('@/app/pages/Signals').then((m) => ({ default: m.Signals })));
 const SignalArticle = lazy(() => import('@/app/pages/SignalArticle').then((m) => ({ default: m.SignalArticle })));
+const Presentations = lazy(() => import('@/app/pages/Presentations').then((m) => ({ default: m.Presentations })));
 
 // Minimal loading fallback
 function PageLoader() {
@@ -41,6 +42,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="demo" element={<Demo />} />
               <Route path="signals" element={<Signals />} />
               <Route path="signals/:slug" element={<SignalArticle />} />
+              <Route path="presentations" element={<Presentations />} />
             </Route>
           </Routes>
         </Suspense>
