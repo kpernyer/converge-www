@@ -11,11 +11,19 @@ const presentations = [
   },
   {
     title: 'Builder Pitch',
-    description: 'For startups who want to own their platform. Stop shopping SaaS, start declaring Truths.',
+    description: 'For startups who want to own their platform. The 9 axioms, business value, and path to ownership.',
     audience: 'Builders & Startups',
-    slides: 18,
+    slides: 21,
     pdf: '/decks/converge.zone-builder-pitch.pdf',
     html: '/decks/converge.zone-builder-pitch.html',
+  },
+  {
+    title: 'Partner Pitch',
+    description: 'For regional and vertical partners. Localize Converge for your market or domain.',
+    audience: 'Partners & Integrators',
+    slides: 22,
+    pdf: '/decks/converge.zone-partner-pitch.pdf',
+    html: '/decks/converge.zone-partner-pitch.html',
   },
 ];
 
