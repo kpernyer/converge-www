@@ -5,17 +5,17 @@ const presentations = [
     title: 'Investor Pitch',
     description: 'The Converge story for investors. Covers the 9 axioms, partner strategy, and community-led growth.',
     audience: 'Investors',
-    slides: 21,
-    pdf: '/decks/investor-pitch.pdf',
-    html: '/decks/investor-pitch.html',
+    slides: 22,
+    pdf: '/decks/converge.zone-investor-pitch.pdf',
+    html: '/decks/converge.zone-investor-pitch.html',
   },
   {
     title: 'Builder Pitch',
     description: 'For startups who want to own their platform. Stop shopping SaaS, start declaring Truths.',
     audience: 'Builders & Startups',
-    slides: 17,
-    pdf: '/decks/builder-pitch.pdf',
-    html: '/decks/builder-pitch.html',
+    slides: 18,
+    pdf: '/decks/converge.zone-builder-pitch.pdf',
+    html: '/decks/converge.zone-builder-pitch.html',
   },
 ];
 
