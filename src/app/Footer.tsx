@@ -34,6 +34,7 @@ export function Footer() {
               <a href="https://github.com/kpernyer/converge-core">GitHub</a>
               <Link to="/manifesto">Manifesto</Link>
               <Link to="/signals">Signals</Link>
+              <Link to="/presentations">Presentations</Link>
             </nav>
           </div>
 
