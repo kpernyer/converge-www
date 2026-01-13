@@ -1,15 +1,22 @@
 ---
 marp: true
-theme: default
+theme: gaia
+class: gaia
 paginate: true
 style: |
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
   :root {
     --paper: #f5f4f0;
     --ink: #111111;
     --ink-secondary: #3a3a3a;
     --ink-muted: #666666;
+    --rule: #c8c6c0;
+    --rule-light: #dbd9d3;
+    --surface: #eae9e4;
     --accent: #2d5a3d;
   }
+
   section {
     background: var(--paper);
     color: var(--ink);
@@ -17,64 +24,139 @@ style: |
     font-size: calc(var(--marpit-root-font-size, 1rem) * 1.1);
     padding: calc(var(--marpit-root-font-size, 1rem) * 4);
   }
+
   h1 {
-    color: var(--accent);
-    font-size: 2.2em;
-    font-weight: 700;
-  }
-  h2 {
-    color: var(--accent);
+    color: var(--ink);
     font-size: 1.6em;
     font-weight: 600;
+    border-bottom: none;
+    margin-bottom: 0.5em;
   }
+
+  h2 {
+    color: var(--ink);
+    font-size: 1.3em;
+    font-weight: 600;
+    border-bottom: none;
+  }
+
   h3 {
     color: var(--ink-secondary);
+    font-size: 1.1em;
+    font-weight: 600;
   }
-  code {
-    background: #e8e6e1;
-    border-radius: 4px;
-    color: var(--ink);
-  }
-  pre {
-    background: #e8e6e1;
-    border-radius: 8px;
-    padding: 1em;
-  }
-  pre code {
-    background: transparent;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: var(--accent);
-    color: white;
-  }
-  td {
-    background: #e8e6e1;
-  }
-  blockquote {
-    border-left: 4px solid var(--accent);
-    background: #e8e6e1;
-    padding: 0.5em 1em;
-    font-style: italic;
-    color: var(--ink-secondary);
-  }
-  a {
+
+  h1 strong, h2 strong, h3 strong {
     color: var(--accent);
+    font-weight: inherit;
   }
+
   strong {
     color: var(--accent);
   }
+
+  code {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9em;
+    padding: 0.1em 0.3em;
+    border-radius: 2px;
+  }
+
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1em;
+    line-height: 1.15;
+    overflow: visible;
+  }
+
+  pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 0.85em;
+  }
+
+  table {
+    font-size: calc(var(--marpit-root-font-size, 1rem) * 0.85);
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: calc(var(--marpit-root-font-size, 1rem) * 0.8);
+    text-align: left;
+    padding: calc(var(--marpit-root-font-size, 1rem) * 0.5) calc(var(--marpit-root-font-size, 1rem) * 0.75);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  td {
+    padding: calc(var(--marpit-root-font-size, 1rem) * 0.5) calc(var(--marpit-root-font-size, 1rem) * 0.75);
+    border-bottom: 1px solid var(--rule-light);
+    color: var(--ink-secondary);
+  }
+
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: calc(var(--marpit-root-font-size, 1rem) * 1.5);
+    margin-left: 0;
+    color: var(--ink-secondary);
+    font-size: calc(var(--marpit-root-font-size, 1rem) * 1.25);
+    line-height: 1.5;
+  }
+
+  blockquote strong {
+    color: var(--ink);
+  }
+
+  ul, ol {
+    text-align: left;
+  }
+
+  li {
+    margin-bottom: calc(var(--marpit-root-font-size, 1rem) * 0.75);
+  }
+
+  li::marker {
+    color: var(--accent);
+  }
+
+  a {
+    color: var(--accent);
+  }
+
+  footer {
+    color: var(--ink-muted);
+    font-size: calc(var(--marpit-root-font-size, 1rem) * 0.65);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  section.lead {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
   em {
     color: var(--ink-muted);
+    font-style: italic;
   }
 ---
 
+<!-- _class: lead -->
+
 # Converge Ledger
+
 ## The Memory of the System
 
-**A Distributed, Append-Only Runtime Substrate**
+**Distributed, Append-Only Runtime Substrate**
 
 *For Distributed Systems Engineers & Architects*
 
@@ -160,9 +242,9 @@ For any given Root Intent:
 
 | Property | Guarantee |
 |----------|-----------|
-| **Single Writer** | Exactly one Converge engine appends |
-| **Multiple Readers** | Any number of observers |
-| **Append-Only** | No updates, deletes, or overwrites |
+| Single Writer | Exactly one Converge engine appends |
+| Multiple Readers | Any number of observers |
+| Append-Only | No updates, deletes, or overwrites |
 
 **What This Eliminates:**
 - No conflicts
@@ -178,11 +260,11 @@ For any given Root Intent:
 
 | OTP Feature | How We Use It |
 |-------------|---------------|
-| **Mnesia** | Distributed, in-memory, soft-real-time storage |
-| **GenServer** | Isolated failure domains |
-| **Supervisors** | Automatic restart, self-healing |
-| **:net_kernel** | Native clustering (no sidecars) |
-| **:pg** | Zero-config service discovery |
+| Mnesia | Distributed, in-memory, soft-real-time storage |
+| GenServer | Isolated failure domains |
+| Supervisors | Automatic restart, self-healing |
+| :net_kernel | Native clustering (no sidecars) |
+| :pg | Zero-config service discovery |
 
 **What We Explicitly Avoid in Elixir:**
 - Semantic validation → Rust
@@ -443,6 +525,8 @@ Each component has an **isolated failure domain**.
 
 ---
 
+<!-- _class: lead -->
+
 # The Golden Rule
 
 > **Converge converges in Rust.**
@@ -458,6 +542,8 @@ Each component has an **isolated failure domain**.
 - **docs/INTEGRITY.md** — Merkle trees and Lamport clocks
 
 ---
+
+<!-- _class: lead -->
 
 # Thank You
 
