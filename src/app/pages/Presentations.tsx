@@ -57,6 +57,14 @@ const presentations = [
     pdf: '/decks/converge.zone-recruiting-pitch.pdf',
     html: '/decks/converge.zone-recruiting-pitch.html',
   },
+  {
+    title: 'Ledger Tech Deep Dive',
+    description: 'Distributed append-only memory for agentic systems. Merkle trees, Lamport clocks, Elixir/OTP.',
+    audience: 'Distributed Systems',
+    slides: 24,
+    pdf: '/decks/converge.zone-ledger-tech.pdf',
+    html: '/decks/converge.zone-ledger-tech.html',
+  },
 ];
 
 export function Presentations() {
