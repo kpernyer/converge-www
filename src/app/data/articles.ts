@@ -4,6 +4,274 @@ import type { Article } from '@/api/signals.types';
 
 export const articles: Article[] = [
   {
+    slug: 'same-ai-prompt-ships-faster-android-than-ios',
+    title: 'Why the same AI prompt ships faster on Android than on iOS (what I observed building both in parallel)',
+    subtitle: 'Claude-assisted mobile development across two ecosystems',
+    author: 'Kenneth Pernyer',
+    publishedAt: '2026-01-14T10:00:00Z',
+    tags: ['ai', 'mobile', 'android', 'ios', 'prompting'],
+    readingTime: 7,
+    featured: false,
+    content: `I’ll start with a confession: **I’m not a front-end or mobile programmer by trade.**
+
+For years I’ve been drawn to “one tool to rule them all” approaches—frameworks that hide the sharp edges and let you ship with a single abstraction layer: **React Native, Flutter**, that whole category. And that instinct makes sense when you’re optimizing for speed, staffing, and predictability.
+
+But lately, something has shifted.
+
+With AI-assisted programming, I’m increasingly tempted to do the opposite:
+
+- **reduce indirections**
+- **avoid extra virtual machines and thick runtimes**
+- **get closer to the metal**
+- and let AI guide me through the platform-native details
+
+So I decided to build **both an Android app and an iOS app in parallel**, using the same AI workflow (Claude) and, intentionally, almost identical instructions.
+
+And a pattern kept repeating.
+
+---
+
+## The observation
+
+When I ask for a feature with the same intent—say:
+
+- set up a foundation
+- add testing and quality signals
+- wire a streaming client
+- add an ML layer (some on-device)
+- establish a clean architecture
+
+…the Android side typically comes back:
+
+- more directly
+- more consistently
+- with fewer “choose your own adventure” forks
+- and with fewer environment-specific traps
+
+Whereas iOS often comes back:
+
+- longer
+- more conditional
+- more “it depends”
+- and more likely to include steps that require manual Xcode/UI work
+
+This post isn’t a platform war take. It’s an observation from the builder’s seat — and a useful lesson in how to prompt, plan, and ship when AI is part of your team.
+
+---
+
+## First principle: AI ships fastest when the ecosystem has fewer “degrees of freedom”
+
+A big part of this is not Kotlin vs Swift.
+
+It’s *paths*.
+
+Android, today, has a fairly dominant “modern default”:
+
+- Kotlin
+- Gradle
+- Jetpack Compose
+- coroutines
+- well-worn dependency patterns
+
+You can deviate, but the gravity is strong.
+
+On iOS, the number of “valid paths” is higher:
+
+- SwiftUI vs UIKit (or a hybrid)
+- SPM vs CocoaPods vs Carthage (SPM is winning, but legacy remains)
+- MVVM vs TCA vs “Apple-ish minimalism” vs custom architectures
+- Combine vs async/await
+- multiple lifecycle models and app targets (especially across iOS/macOS/watchOS)
+
+When you say “build me a clean foundation,” the Android answer is often one clear route.
+
+The iOS answer often contains a *decision tree*.
+
+And every decision tree costs time.
+
+---
+
+## Case 1: iOS has more configuration hidden inside project files
+
+Android’s project configuration is mostly text-first:
+
+- Gradle files
+- manifest
+- predictable directory structures
+
+iOS development carries more “state” in places that don’t translate cleanly into prompts:
+
+- .xcodeproj and .xcworkspace
+- .pbxproj internals
+- scheme settings
+- signing settings
+- entitlements
+- Info.plist
+- build phases
+- and the general “Xcode is a UI configuration surface” reality
+
+AI is great at generating code.  
+It’s weaker at safely editing *opaque build configuration artifacts*.
+
+So the model compensates: it writes more explanation, suggests alternatives, and creates extra guardrails.
+
+That makes iOS output slower and more verbose even when you didn’t ask for verbosity.
+
+---
+
+## Case 2: iOS builds have more environment friction
+
+Even if you don’t explicitly ask for it, iOS features often touch:
+
+- provisioning profiles / code signing
+- capabilities
+- privacy permission strings
+- ATS rules
+- background modes
+- device provisioning quirks
+
+Android has similar concepts (permissions, manifests, keystores), but the baseline developer loop tends to be less brittle.
+
+So on iOS, the AI tends to pre-emptively include steps like:
+
+- “enable this capability”
+- “update entitlements”
+- “add Info.plist entry”
+- “check your signing settings”
+- “make sure the scheme is correct”
+
+Again: more branches, more steps, slower completion.
+
+---
+
+## Case 3: there are more consistent copyable patterns for Android in public text
+
+This matters more than most people admit.
+
+A lot of iOS knowledge lives in:
+
+- videos
+- screenshots
+- “click this in Xcode”
+- Apple docs that assume UI interaction
+- code that depends on project settings the code snippet doesn’t show
+
+Android has an abundance of:
+
+- complete GitHub examples
+- consistent Compose patterns
+- reproducible Gradle-based setups
+
+That means AI is more likely to have absorbed:
+
+- a *single dominant Android way* to do things  
+- but *multiple competing iOS ways* — plus incomplete context from text-only examples
+
+So Android outputs look more decisive.
+
+iOS outputs look more cautious.
+
+---
+
+## Case 4: prompts that are good enough for Android are often under-specified for iOS
+
+This is the practical takeaway.
+
+If you give the same prompt to both platforms, iOS usually needs *more constraints* to converge quickly.
+
+For example, this prompt is “fine” for Android:
+
+> “Create a modern foundation with streaming, on-device ML, and testing.”
+
+But for iOS, you often need to force a lane:
+
+- SwiftUI only
+- SPM only
+- async/await only
+- MVVM only
+- iOS 17+ target
+- no UIKit interop unless explicitly required
+- no Combine unless explicitly required
+
+In other words: **prompting iOS needs stricter boundaries because there are more paths to walk down.**
+
+---
+
+## A meta-lesson: software is drifting — so we need stronger truths
+
+This experience also reinforces a broader point I care about:
+
+Modern systems drift because we don’t specify what must be true.
+
+We specify *interfaces* and *tickets*.  
+We don’t specify *truths*.
+
+When you bring AI into the loop, ambiguity doesn’t just cause human debate.  
+It causes the model to explore multiple implementation worlds.
+
+So I’ve become increasingly convinced that the future is:
+
+- start from outcomes (Jobs To Be Done)
+- encode constraints (“truths” / invariants)
+- then let implementation converge inside those rules
+
+Not “more prompting.”  
+More *specification*.
+
+---
+
+## Practical advice if you’re building both platforms with AI
+
+Here’s what I’m doing now:
+
+### 1) Write a platform contract per mobile OS
+
+One page each, stating:
+
+- architecture
+- dependencies policy
+- testing setup
+- streaming approach
+- ML approach
+- never do this list
+
+### 2) Make iOS prompts more explicit than Android prompts
+
+Even if you want parity, you need to limit iOS branching.
+
+### 3) Split work into vertical slices
+
+Instead of “build the foundation,” ask for:
+
+- one streaming client
+- one screen
+- one local inference
+- one test harness
+
+### 4) Expect more friction in Xcode-land
+
+Budget time for project settings, signing, entitlements, and environment setup.
+
+It’s not about Swift being worse.  
+It’s about Xcode being a thicker layer of hidden state.
+
+---
+
+## Closing thought
+
+My takeaway isn’t “Android is better.”
+
+It’s:
+
+**Android is more text-first reproducible, so AI converges faster.  
+iOS has more configuration and more valid paths, so you must constrain the system harder.**
+
+And that’s actually a useful gift:  
+it pushes us to build better specs, tighter contracts, and more predictable development loops.
+
+If you’ve observed the same pattern—or disagree—I’d love to hear how you structure your cross-platform AI workflow.`,
+  },
+  {
     slug: 'agent-system-operating-system',
     title: 'What Makes an Agent System an Operating System',
     subtitle: 'Why Converge is an OS, not a framework',
