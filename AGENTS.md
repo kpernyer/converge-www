@@ -1,5 +1,7 @@
 # AI Agents Configuration
 
+> Converge is a vision for **semantic governance**. We move from fragmented intent to unified, converged states through a deterministic alignment engine. Our mission is to provide a stable foundation for complex decision-making where human authority and AI agency coexist in a transparent, explainable ecosystem.
+
 This document describes how AI agents (like Cursor AI) should interact with this codebase.
 
 ## Project Overview
@@ -39,12 +41,14 @@ src/
 ## TypeScript Standards
 
 ### Strict Rules
+
 - **No `any` types** - Use proper types or `unknown` with narrowing
 - **Strict mode enabled** - All strict checks are active
 - **Boundary validation** - Validate all external data (API responses, user input)
 - **No type assertions** - Prefer type narrowing over `as` casts
 
 ### Type Safety Patterns
+
 ```typescript
 // ✅ Good: Proper type narrowing
 function process(data: unknown) {
@@ -62,12 +66,14 @@ function process(data: unknown) {
 ## React Patterns
 
 ### Component Structure
+
 - Use functional components with TypeScript interfaces for props
 - Extract side effects into custom hooks
 - Keep components presentational when possible
 - Use CSS Modules for styling
 
 ### Example Component
+
 ```typescript
 import styles from './Component.module.css';
 
@@ -137,18 +143,21 @@ export type { ValidationSeverity, JobMetadata } from './schemas';
 ## Common Tasks
 
 ### Adding a New Page
+
 1. Create component in `src/app/pages/`
 2. Create CSS Module file `PageName.module.css`
 3. Add route in `src/app/App.tsx`
 4. Follow existing page patterns
 
 ### Adding a New Component
+
 1. Create component in `src/app/components/` or appropriate location
 2. Create CSS Module file
 3. Export from component file
 4. Import and use in parent component
 
 ### Modifying Styles
+
 - Component styles: Edit the `.module.css` file
 - Global styles: Edit files in `src/styles/`
 - Tokens: Modify `src/styles/tokens.css`

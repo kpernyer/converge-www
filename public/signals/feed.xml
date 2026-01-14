@@ -5,8 +5,21 @@
     <link>https://converge.zone/signals</link>
     <description>Dispatches from the convergence frontier — architecture, agents, and the systems that make them trustworthy.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 10:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 10:00:00 GMT</lastBuildDate>
     <atom:link href="https://converge.zone/signals/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Why the same AI prompt ships faster on Android than on iOS (what I observed building both in parallel)</title>
+      <link>https://converge.zone/signals/same-ai-prompt-ships-faster-android-than-ios</link>
+      <guid isPermaLink="true">https://converge.zone/signals/same-ai-prompt-ships-faster-android-than-ios</guid>
+      <pubDate>Wed, 14 Jan 2026 10:00:00 GMT</pubDate>
+      <author>Kenneth Pernyer</author>
+      <description>I’ll start with a confession: I’m not a front-end or mobile programmer by trade. For years I’ve been drawn to “one tool to rule them all” approaches—frameworks that hide the sharp edges and let you ship with a single abstraction layer: React Native, Flutter, that whole category. And that instinct...</description>
+      <category>ai</category>
+      <category>mobile</category>
+      <category>android</category>
+      <category>ios</category>
+      <category>prompting</category>
+    </item>
     <item>
       <title>What Makes an Agent System an Operating System</title>
       <link>https://converge.zone/signals/agent-system-operating-system</link>
