@@ -93,6 +93,25 @@ tag version message:
     git tag -a {{version}} -m "{{message}}"
     git push origin {{version}}
 
+# Publish to production (auto-increments patch version, pushes, deploys via CI)
+publish message="Release":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    latest=$(git tag -l 'v*' --sort=-version:refname | head -1)
+    if [[ -z "$latest" ]]; then
+        next="v1.0.0"
+    else
+        IFS='.' read -r major minor patch <<< "${latest#v}"
+        next="v${major}.${minor}.$((patch + 1))"
+    fi
+    echo "Publishing $next..."
+    git add -A
+    git diff --cached --quiet || git commit -m "{{message}}"
+    git push
+    git tag -a "$next" -m "{{message}}"
+    git push origin "$next"
+    echo "✓ Tagged $next - deploy workflow triggered"
+
 # List tags
 tags:
     git tag -l --sort=-version:refname | head -10
