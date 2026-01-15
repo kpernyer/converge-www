@@ -63,7 +63,7 @@ export function Tools() {
         <h1 className={styles.title}>Converge Truths</h1>
         <p className={styles.subtitle}>
           Declare what must be true in a structured, verifiable format.
-          Express your business reality. Let the engine make it so.
+          Validate, score, and generate Truths from free text.
         </p>
       </header>
 
@@ -91,10 +91,10 @@ export function Tools() {
             </p>
           </div>
           <div className={styles.whyCard}>
-            <h3 className={styles.whyTitle}>LLM Validation</h3>
+            <h3 className={styles.whyTitle}>LLM Validation + Generation</h3>
             <p className={styles.whyDescription}>
-              Rules are validated by LLM for compilability, convention compliance,
-              and business sense before execution.
+              Rules are validated and can be generated from free text with
+              confidence scoring and suggestions.
             </p>
           </div>
         </div>
@@ -232,6 +232,19 @@ export function Tools() {
             </div>
           ))}
         </div>
+      </section>
+
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Spec Generation</h2>
+        <p className={styles.sectionDescription}>
+          Convert free text into Converge Truths and iterate with LLM-assisted
+          feedback loops.
+        </p>
+        <pre className={styles.codeBlock}>
+          <code>{`# Generate a Truth spec from free text
+ANTHROPIC_API_KEY=your_key cargo run --example generate_spec`}</code>
+        </pre>
       </section>
 
       <section className={styles.section}>

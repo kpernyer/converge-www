@@ -2,18 +2,20 @@ import styles from './Provider.module.css';
 import { CONVERGE_PROVIDER_VERSION } from '../../versions';
 
 const providers = [
-  { name: 'Anthropic', models: 'Claude 3.5 Sonnet, Haiku, Opus', status: 'stable' },
-  { name: 'OpenAI', models: 'GPT-4o, GPT-4o-mini', status: 'stable' },
+  { name: 'Anthropic', models: 'Claude 3.5 Sonnet, Haiku, Opus 4', status: 'stable' },
+  { name: 'OpenAI', models: 'GPT-4o, GPT-4o-mini, GPT-4 Turbo', status: 'stable' },
   { name: 'Google Gemini', models: 'Gemini Pro, Flash', status: 'stable' },
-  { name: 'Qwen', models: 'Qwen-Max, Qwen-Plus', status: 'stable' },
+  { name: 'Alibaba Qwen', models: 'Qwen-Max, Qwen-Plus, Qwen3-VL', status: 'stable' },
   { name: 'DeepSeek', models: 'DeepSeek Chat, Coder', status: 'stable' },
   { name: 'Mistral', models: 'Mistral Large, Medium', status: 'stable' },
-  { name: 'Grok', models: 'xAI models', status: 'beta' },
-  { name: 'Perplexity', models: 'Online models', status: 'beta' },
+  { name: 'xAI Grok', models: 'Grok models', status: 'beta' },
+  { name: 'Perplexity', models: 'Online models (web search)', status: 'stable' },
   { name: 'OpenRouter', models: 'Multi-provider gateway', status: 'stable' },
-  { name: 'Baidu', models: 'ERNIE', status: 'beta' },
-  { name: 'Zhipu', models: 'GLM-4', status: 'beta' },
-  { name: 'Kimi', models: 'Moonshot', status: 'beta' },
+  { name: 'Baidu ERNIE', models: 'ERNIE models', status: 'beta' },
+  { name: 'Zhipu GLM', models: 'GLM-4 models', status: 'beta' },
+  { name: 'Kimi (Moonshot)', models: 'Moonshot models', status: 'beta' },
+  { name: 'Apertus', models: 'EU digital sovereignty', status: 'beta' },
+  { name: 'Ollama', models: 'Local models (Llama, Mistral)', status: 'beta' },
 ];
 
 const costClasses = [
@@ -57,8 +59,8 @@ export function Provider() {
         <p className={styles.tagline}>converge-provider</p>
         <h1 className={styles.title}>LLM Abstraction Layer</h1>
         <p className={styles.subtitle}>
-          Unified interface to 12+ LLM providers with intelligent model selection
-          based on cost, latency, and quality requirements.
+          Unified interface to 14+ LLM providers and capability adapters.
+          Model selection balances cost, latency, quality, and sovereignty.
         </p>
       </header>
 

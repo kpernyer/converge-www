@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const subsystems = [
-  { path: '/core', name: 'converge-core', description: 'The runtime engine' },
-  { path: '/provider', name: 'converge-provider', description: 'LLM abstraction layer' },
+  { path: '/core', name: 'converge-core', description: 'Semantic engine' },
+  { path: '/provider', name: 'converge-provider', description: 'Capability adapters' },
   { path: '/domain', name: 'converge-domain', description: 'Domain agents' },
-  { path: '/tools', name: 'converge-tool', description: 'Rules & validation' },
-  { path: '/ledger', name: 'converge-ledger', description: 'Audit trail (Elixir)' },
+  { path: '/runtime', name: 'converge-runtime', description: 'HTTP + gRPC server' },
+  { path: '/mobile', name: 'converge-mobile', description: 'Android + iOS clients' },
+  { path: '/tools', name: 'converge-tool', description: 'Truths & validation' },
+  { path: '/ledger', name: 'converge-ledger', description: 'Append-only substrate' },
 ];
 
 export function Header() {

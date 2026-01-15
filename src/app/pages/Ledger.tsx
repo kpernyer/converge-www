@@ -3,47 +3,47 @@ import { CONVERGE_LEDGER_VERSION } from '../../versions';
 
 const features = [
   {
-    name: 'Immutable Audit Trail',
-    description: 'Every context mutation, agent execution, and decision is recorded permanently.',
+    name: 'Append-Only Context',
+    description: 'Entries are immutable and ordered. No updates, no deletes, no rewrites.',
   },
   {
-    name: 'Cryptographic Integrity',
-    description: 'Hash chains ensure tamper-evident history. Detect any modification.',
+    name: 'Merkle Tree Integrity',
+    description: 'Tamper-evident snapshots and proofs with compact root hashes.',
   },
   {
-    name: 'Temporal Queries',
-    description: 'Query state at any point in time. Replay decisions with full context.',
+    name: 'Lamport Clock Ordering',
+    description: 'Causal ordering across distributed contexts without relying on wall clocks.',
   },
   {
-    name: 'Event Sourcing',
-    description: 'Built on event sourcing principles. Reconstruct state from events.',
+    name: 'Watch Streams',
+    description: 'Stream new entries for real-time observation and tooling.',
   },
   {
-    name: 'OTP Integration',
-    description: 'Native Elixir/OTP design. Supervision trees, GenServers, fault tolerance.',
+    name: 'Snapshot & Restore',
+    description: 'Serialize and load contexts for fast restart and recovery.',
   },
   {
-    name: 'PostgreSQL Backend',
-    description: 'Battle-tested storage with Ecto. JSONB for flexible fact schemas.',
+    name: 'OTP Fault Isolation',
+    description: 'Supervision trees, process isolation, and self-healing nodes.',
   },
 ];
 
 const useCases = [
   {
-    name: 'Compliance Auditing',
-    description: 'Track every decision for regulatory compliance. Prove what happened and why.',
+    name: 'Distributed Observation',
+    description: 'Multiple observers watch the same convergence in real time.',
   },
   {
-    name: 'Debug & Replay',
-    description: 'Reproduce any convergence run. Step through agent decisions.',
+    name: 'Fast Restart',
+    description: 'Resume long-running jobs without recomputing context from scratch.',
   },
   {
-    name: 'Rollback & Recovery',
-    description: 'Restore context to any prior state. Recover from errors gracefully.',
+    name: 'Audit Proofs',
+    description: 'Merkle roots provide tamper-evident proofs of history.',
   },
   {
-    name: 'Multi-System Sync',
-    description: 'Sync ledger state across distributed systems. Eventual consistency.',
+    name: 'HITL Pauses',
+    description: 'Human-in-the-loop pauses with reliable context recovery.',
   },
 ];
 
@@ -54,8 +54,8 @@ export function Ledger() {
         <p className={styles.tagline}>converge-ledger</p>
         <h1 className={styles.title}>Audit Trail</h1>
         <p className={styles.subtitle}>
-          Immutable, cryptographically-verified audit trail for Converge systems.
-          Built in Elixir for fault-tolerant, distributed deployments.
+          Optional, append-only runtime substrate for Converge systems.
+          Remembers what happened; never decides what is true.
         </p>
       </header>
 
@@ -106,33 +106,22 @@ export function Ledger() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Example</h2>
         <pre className={styles.codeBlock}>
-          <code>{`defmodule MyApp.Convergence do
-  use ConvergeLedger
+          <code>{`alias ConvergeLedger.Storage.Store
+alias ConvergeLedger.Entry
 
-  @impl true
-  def handle_convergence(context, result) do
-    # Record convergence run
-    {:ok, entry} = ConvergeLedger.record(context, result)
+# Append an entry (Lamport clock assigned automatically)
+{:ok, entry} = Store.append("ctx-001", "facts", "payload")
 
-    # Entry includes:
-    # - Hash chain linking to previous entry
-    # - All facts added during convergence
-    # - Agent execution timeline
-    # - Final context state
+entry.lamport_clock  # => 1
+entry.content_hash   # => <<32 bytes SHA-256>>
 
-    Logger.info("Recorded convergence: #{entry.hash}")
-    {:ok, entry}
-  end
-end
+# Verify integrity
+{:ok, :verified} = Entry.verify_integrity(entry)
 
-# Query historical state
-{:ok, context} = ConvergeLedger.at_time(~U[2024-01-15 10:30:00Z])
-
-# Replay a specific convergence run
-{:ok, replay} = ConvergeLedger.replay(entry_hash)
-
-# Verify chain integrity
-:ok = ConvergeLedger.verify_chain(from: start_hash, to: end_hash)`}</code>
+# Snapshot with Merkle root
+{:ok, blob, _seq, meta} = Store.snapshot("ctx-001")
+meta.merkle_root     # => "a1b2c3..."
+`}</code>
         </pre>
       </section>
 

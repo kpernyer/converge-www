@@ -137,6 +137,28 @@ export function Manifesto() {
       </section>
 
       <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Design Tenets (Principles)</h2>
+        <p>
+          These tenets describe how Converge is built and governed. They are distinct
+          from the axioms.
+        </p>
+        <p className={styles.emphasis}>
+          Converge has <strong>only 9 axioms</strong>. Tenets are principles; axioms are guarantees.
+        </p>
+        <ul className={styles.list}>
+          <li>Explicit Authority</li>
+          <li>Convergence Over Control Flow</li>
+          <li>Append-Only Truth</li>
+          <li>Agents Suggest, Engines Decide</li>
+          <li>Safety by Construction</li>
+          <li>Transparent Determinism</li>
+          <li>Human Authority Is First-Class</li>
+          <li>No Hidden Work</li>
+          <li>Scale by Intent Replication</li>
+        </ul>
+      </section>
+
+      <section className={styles.section}>
         <h2 className={styles.sectionTitle}>The Long Game</h2>
         <p>
           Converge begins as a semantic engine — an Agent OS for people who care about correctness.

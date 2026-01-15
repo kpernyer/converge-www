@@ -18,6 +18,7 @@ export function Axioms() {
       <h2 className={styles.title}>The 9 Axioms</h2>
       <p className={styles.subtitle}>
         Mathematical guarantees that make multi-agent systems predictable.
+        Only these 9 are axioms; design tenets are principles.
       </p>
       <div className={styles.grid}>
         {axioms.map((axiom) => (

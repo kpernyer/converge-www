@@ -14,6 +14,8 @@ const Domain = lazy(() => import('@/app/pages/Domain').then((m) => ({ default: m
 const Provider = lazy(() => import('@/app/pages/Provider').then((m) => ({ default: m.Provider })));
 const Tools = lazy(() => import('@/app/pages/Tools').then((m) => ({ default: m.Tools })));
 const Ledger = lazy(() => import('@/app/pages/Ledger').then((m) => ({ default: m.Ledger })));
+const Runtime = lazy(() => import('@/app/pages/Runtime').then((m) => ({ default: m.Runtime })));
+const Mobile = lazy(() => import('@/app/pages/Mobile').then((m) => ({ default: m.Mobile })));
 const Manifesto = lazy(() => import('@/app/pages/Manifesto').then((m) => ({ default: m.Manifesto })));
 const Demo = lazy(() => import('@/app/pages/Demo').then((m) => ({ default: m.Demo })));
 const Signals = lazy(() => import('@/app/pages/Signals').then((m) => ({ default: m.Signals })));
@@ -39,6 +41,8 @@ createRoot(document.getElementById('root')!).render(
               <Route path="provider" element={<Provider />} />
               <Route path="tools" element={<Tools />} />
               <Route path="ledger" element={<Ledger />} />
+              <Route path="runtime" element={<Runtime />} />
+              <Route path="mobile" element={<Mobile />} />
               <Route path="manifesto" element={<Manifesto />} />
               <Route path="demo" element={<Demo />} />
               <Route path="demo/travel" element={<DemoTravel />} />

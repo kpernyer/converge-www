@@ -16,29 +16,39 @@ const axioms = [
 const concepts = [
   {
     name: 'Engine',
-    description: 'The runtime that orchestrates agent execution until convergence.',
+    description: 'The convergence loop that validates effects and decides what becomes Fact.',
     code: `let mut engine = Engine::new();
 engine.register(MyAgent);
 let result = engine.run(context)?;`,
   },
   {
     name: 'Context',
-    description: 'The shared, immutable state that agents read from and write to.',
+    description: 'The shared, typed, append-only job state. Context is the API.',
     code: `let mut ctx = Context::new();
 ctx.add_fact(Fact::new(ContextKey::Seeds, "id", "data"))?;`,
   },
   {
     name: 'Agent',
-    description: 'A unit of computation that reacts to context and produces facts.',
+    description: 'A capability that reads context and emits buffered effects.',
     code: `impl Agent for MyAgent {
-    fn execute(&self, ctx: &Context) -> Result<Vec<Fact>> {
-        // Read context, produce facts
+    fn dependencies(&self) -> &[ContextKey] { &[ContextKey::Seeds] }
+
+    fn accepts(&self, ctx: &Context) -> bool {
+        ctx.has(ContextKey::Seeds)
+    }
+
+    fn execute(&self, _ctx: &Context) -> AgentEffect {
+        AgentEffect::with_fact(Fact::new(
+            ContextKey::Signals,
+            "analysis",
+            "result",
+        ))
     }
 }`,
   },
   {
     name: 'Fact',
-    description: 'An immutable piece of data added to the context.',
+    description: 'An authoritative, immutable entry in context (proposals must be validated).',
     code: `Fact::new(
     ContextKey::Signals,
     "market-trend",
@@ -54,8 +64,8 @@ export function Core() {
         <p className={styles.tagline}>converge-core</p>
         <h1 className={styles.title}>The Runtime Engine</h1>
         <p className={styles.subtitle}>
-          A formally proven multi-agent runtime with deterministic convergence guarantees.
-          9 axioms. No hidden state. No starvation.
+          The semantic engine that decides what becomes a Fact.
+          Deterministic convergence, append-only context, and explicit authority.
         </p>
       </header>
 
@@ -109,27 +119,31 @@ export function Core() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Minimal Example</h2>
         <pre className={styles.codeBlock}>
-          <code>{`use converge_core::{Engine, Context, ContextKey, Fact, Agent};
+          <code>{`use converge_core::{Agent, AgentEffect, Context, ContextKey, Engine, Fact};
 
 // Define an agent
 struct AnalysisAgent;
 
 impl Agent for AnalysisAgent {
-    fn name(&self) -> &str { "AnalysisAgent" }
+    fn name(&self) -> &str { "analysis" }
 
-    fn can_run(&self, ctx: &Context) -> bool {
-        ctx.has_key(ContextKey::Seeds) && !ctx.has_key(ContextKey::Signals)
+    fn dependencies(&self) -> &[ContextKey] { &[ContextKey::Seeds] }
+
+    fn accepts(&self, ctx: &Context) -> bool {
+        ctx.has(ContextKey::Seeds) && ctx.get(ContextKey::Signals).is_empty()
     }
 
-    fn execute(&self, ctx: &Context) -> Result<Vec<Fact>> {
-        let seeds = ctx.get(ContextKey::Seeds);
-        // Analyze seeds, produce signals
-        Ok(vec![Fact::new(ContextKey::Signals, "analysis", "result")])
+    fn execute(&self, _ctx: &Context) -> AgentEffect {
+        AgentEffect::with_fact(Fact::new(
+            ContextKey::Signals,
+            "analysis",
+            "result",
+        ))
     }
 }
 
 // Run to convergence
-fn main() -> Result<()> {
+fn main() -> Result<(), converge_core::ConvergeError> {
     let mut engine = Engine::new();
     engine.register(AnalysisAgent);
 

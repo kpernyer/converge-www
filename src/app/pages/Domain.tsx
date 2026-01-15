@@ -15,13 +15,18 @@ const useCases = [
         description: 'Vendor assessment, risk scoring, and negotiation recommendations.',
         agents: ['VendorProfileAgent', 'RiskScoringAgent', 'NegotiationAgent'],
       },
+      {
+        name: 'SDR Sales',
+        description: 'Qualification funnel, lead scoring, and next-best-action proposals.',
+        agents: ['LeadIntakeAgent', 'QualificationAgent', 'ScoringAgent'],
+      },
     ],
   },
   {
     category: 'Operations',
     items: [
       {
-        name: 'Supply Chain Optimization',
+        name: 'Supply Chain',
         description: 'Multi-warehouse routing, demand forecasting, cost optimization across regions.',
         agents: ['DemandForecastAgent', 'RoutingAgent', 'CostOptimizer'],
       },
@@ -54,6 +59,11 @@ const useCases = [
         name: 'Compliance Monitoring',
         description: 'Regulation parsing, violation detection, remediation proposals.',
         agents: ['RegulationParser', 'ViolationDetector', 'RemediationAgent'],
+      },
+      {
+        name: 'HR Policy Alignment',
+        description: 'Policy distribution, understanding signals, and compliance tracking.',
+        agents: ['PolicyParser', 'UnderstandingAgent', 'ComplianceAgent'],
       },
     ],
   },
@@ -92,7 +102,7 @@ const patterns = [
   },
   {
     name: 'LLM Integration',
-    description: 'Optional LLM-powered variants for natural language reasoning',
+    description: 'LLM agents emit proposals; validators promote to Facts',
     visual: '● → [llm] → ●',
   },
 ];
@@ -104,8 +114,8 @@ export function Domain() {
         <p className={styles.tagline}>converge-domain</p>
         <h1 className={styles.title}>Domain Agents</h1>
         <p className={styles.subtitle}>
-          Production-ready agent implementations for common enterprise use cases.
-          Each demonstrates Converge patterns with deterministic convergence.
+          Business semantics, invariants, and agents that converge on outcomes.
+          13 packs, 116 agents, 46 invariants, 26 evals, 7 blueprints.
         </p>
       </header>
 
