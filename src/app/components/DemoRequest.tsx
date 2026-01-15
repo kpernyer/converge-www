@@ -13,7 +13,7 @@ export function DemoRequest({ onClose }: DemoRequestProps) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<RequestState>('idle');
   const [currentStep, setCurrentStep] = useState(0);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, _setErrorMessage] = useState('');
   const nameInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,9 +28,9 @@ export function DemoRequest({ onClose }: DemoRequestProps) {
     }
   };
 
-  const handleEmailSubmit = async (e: React.KeyboardEvent) => {
+  const handleEmailSubmit = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && email.trim()) {
-      await submitRequest();
+      void submitRequest();
     }
   };
 

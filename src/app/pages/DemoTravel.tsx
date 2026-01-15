@@ -11,7 +11,7 @@ interface Agent {
 export function DemoTravel() {
     const [step, setStep] = useState<Step>('input');
     const [input, setInput] = useState('');
-    const [ghostText, setGhostText] = useState('Seoul week of Feb 3rd. 2 days work.\nExtend 2 days. Return via Dubai (1 night).\nUse Marriott points. Economy Plus.');
+    const [ghostText, _setGhostText] = useState('Seoul week of Feb 3rd. 2 days work.\nExtend 2 days. Return via Dubai (1 night).\nUse Marriott points. Economy Plus.');
     const [gherkin, setGherkin] = useState('');
     const [logs, setLogs] = useState<string[]>([]);
     const [agents, setAgents] = useState<Agent[]>([
@@ -67,7 +67,7 @@ export function DemoTravel() {
     const startSimulation = () => {
         setStep('running');
         setLogs([]);
-        simulateRun();
+        void simulateRun();
     };
 
     const simulateRun = async () => {
@@ -91,14 +91,14 @@ export function DemoTravel() {
         setStep('hold');
     };
 
-    const handleHoldDecision = async (decision: 'yes' | 'no') => {
+    const handleHoldDecision = (decision: 'yes' | 'no') => {
         if (decision === 'yes') {
             addLog("✅ Safe Harbor Held! Continued optimization...");
         } else {
             addLog("❌ Safe Harbor skipped. Continuing...");
         }
         setStep('optimizing');
-        continueSimulation();
+        void continueSimulation();
     };
 
     const continueSimulation = async () => {
@@ -209,10 +209,10 @@ export function DemoTravel() {
                         <p><strong>Emirates Flight EK123 ($2,400)</strong> meets all hard constraints.</p>
                         <p>Would you like to place a 24h Courtesy Hold while I continue optimizing for Alliance Codeshares?</p>
                         <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-                            <button className={styles.button} onClick={() => handleHoldDecision('yes')}>
+                            <button className={styles.button} onClick={() => { handleHoldDecision('yes'); }}>
                                 (Y) Yes, Hold
                             </button>
-                            <button className={styles.button} style={{ background: '#333' }} onClick={() => handleHoldDecision('no')}>
+                            <button className={styles.button} style={{ background: '#333' }} onClick={() => { handleHoldDecision('no'); }}>
                                 (N) No, Risk it
                             </button>
                         </div>
@@ -231,7 +231,7 @@ export function DemoTravel() {
                                 <button
                                     className={styles.button}
                                     style={{ margin: 0, padding: '0.5rem 1rem', fontSize: '0.9rem' }}
-                                    onClick={() => selectOption(i)}
+                                    onClick={() => { void selectOption(i); }}
                                 >
                                     Select
                                 </button>
