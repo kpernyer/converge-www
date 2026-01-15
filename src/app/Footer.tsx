@@ -50,7 +50,10 @@ export function Footer() {
 
         <div className={styles.bottom}>
           <p className={styles.copyright}>MIT License</p>
-          <a href="/signals/feed.xml" className={styles.rss}>RSS</a>
+          <div className={styles.bottomRight}>
+            <span className={styles.version}>{__APP_VERSION__}</span>
+            <a href="/signals/feed.xml" className={styles.rss}>RSS</a>
+          </div>
         </div>
       </div>
     </footer>

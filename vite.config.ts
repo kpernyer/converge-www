@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
+import { execSync } from 'child_process';
 
 // Read versions from ../converge/Cargo.toml
 function readCargoVersions() {
@@ -45,14 +46,25 @@ function readMixVersion() {
   }
 }
 
+// Get app version from latest git tag
+function getAppVersion() {
+  try {
+    return execSync('git describe --tags --abbrev=0 2>/dev/null').toString().trim();
+  } catch {
+    return 'dev';
+  }
+}
+
 const cargoVersions = readCargoVersions();
 const ledgerVersion = readMixVersion();
+const appVersion = getAppVersion();
 
 export default defineConfig({
   plugins: [react()],
   define: {
     __CARGO_VERSIONS__: JSON.stringify(cargoVersions),
     __LEDGER_VERSION__: JSON.stringify(ledgerVersion),
+    __APP_VERSION__: JSON.stringify(appVersion),
   },
   resolve: {
     alias: {
