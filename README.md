@@ -17,6 +17,10 @@ just dev
 
 Open <http://localhost:5173>
 
+## Analytics (Plausible)
+
+Plausible is installed in `index.html`, so no environment variables are required.
+
 ## Commands
 
 ```
@@ -33,6 +37,21 @@ just deploy         # Deploy to Firebase
 - TypeScript
 - CSS Modules
 - Firebase Hosting
+
+## Hosting & Services
+
+- Google
+- Google Cloud
+- Firebase
+- Lighthouse
+- GitHub
+- GitHub Docker
+- AWS (DNS & domains)
+- Crate.io
+- Hex.io
+- Plausible
+- Sentry
+- Prometheus
 
 ## Documentation
 

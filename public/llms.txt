@@ -1,0 +1,17 @@
+site: https://converge.zone
+name: Converge
+description: Correctness-first multi-agent runtime with deterministic convergence guarantees.
+sitemap: https://converge.zone/sitemap.xml
+contact: https://converge.zone
+
+## Primary
+- https://converge.zone/
+- https://converge.zone/manifesto
+- https://converge.zone/core
+- https://converge.zone/domain
+- https://converge.zone/provider
+- https://converge.zone/tools
+- https://converge.zone/ledger
+
+## Signals
+- https://converge.zone/signals

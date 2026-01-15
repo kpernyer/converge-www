@@ -9,7 +9,7 @@ dev:
     bun run dev
 
 # Build for production
-build:
+build: install
     bun run build
 
 # Preview production build locally
@@ -27,6 +27,10 @@ lint:
 # Type check
 typecheck:
     bun run typecheck
+
+# Run tests (lint + typecheck)
+test: lint typecheck
+    @echo "✓ All tests passed"
 
 # Run all checks (lint, typecheck, build)
 check: lint typecheck build
