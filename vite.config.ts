@@ -1,50 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import { execSync } from 'child_process';
 
-// Read versions from ../converge/Cargo.toml
-function readCargoVersions() {
-  try {
-    const cargoPath = resolve(__dirname, '../converge/Cargo.toml');
-    const content = readFileSync(cargoPath, 'utf-8');
+// Hardcoded versions for converge crates
+const cargoVersions = {
+  'converge-core': '0.6.1',
+  'converge-provider': '0.2.3',
+  'converge-domain': '0.2.3',
+};
 
-    // Parse workspace.dependencies versions
-    const versions: Record<string, string> = {};
-
-    // Match patterns like: converge-core = { path = "...", version = "0.6.1" }
-    const depRegex = /^(converge-\w+)\s*=\s*\{[^}]*version\s*=\s*"([^"]+)"/gm;
-    let match;
-    while ((match = depRegex.exec(content)) !== null) {
-      versions[match[1]] = match[2];
-    }
-
-    return versions;
-  } catch (error) {
-    console.warn('Could not read Cargo.toml versions:', error);
-    return {
-      'converge-core': '0.6.1',
-      'converge-provider': '0.2.3',
-      'converge-domain': '0.2.3',
-    };
-  }
-}
-
-// Read version from ../converge-ledger/mix.exs
-function readMixVersion() {
-  try {
-    const mixPath = resolve(__dirname, '../converge-ledger/mix.exs');
-    const content = readFileSync(mixPath, 'utf-8');
-
-    // Match @version "x.y.z"
-    const versionMatch = content.match(/@version\s+"([^"]+)"/);
-    return versionMatch ? versionMatch[1] : '0.1.0';
-  } catch (error) {
-    console.warn('Could not read mix.exs version:', error);
-    return '0.1.0';
-  }
-}
+const ledgerVersion = '0.1.0';
 
 // Get app version from latest git tag
 function getAppVersion() {
@@ -55,8 +20,6 @@ function getAppVersion() {
   }
 }
 
-const cargoVersions = readCargoVersions();
-const ledgerVersion = readMixVersion();
 const appVersion = getAppVersion();
 
 export default defineConfig({
