@@ -20,6 +20,7 @@ Architecture describes how convergence is executed, validated, and scaled.
 - Engine execution model separates proposals from accepted facts.
 - Crate layering enforces dependency direction: core -> provider -> domain -> tool -> runtime.
 - Provider layer implements capability ports (LLM, embedding, vector, reranking) with model selection.
+- Specialized agent stacks (e.g., converge-analytics) provide domain-specific agent capabilities.
 - Failure modes and scaling models are first-class design constraints.
 
 ## Source Map
@@ -34,3 +35,4 @@ Architecture describes how convergence is executed, validated, and scaled.
 - `converge-platform/converge-core/README.md`
 - `converge-platform/converge-provider/README.md`
 - `converge-platform/converge-domain/README.md`
+- `converge-analytics/README.md` - Analytics-focused agent stack for ML workflows
