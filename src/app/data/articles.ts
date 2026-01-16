@@ -4,6 +4,302 @@ import type { Article } from '@/api/signals.types';
 
 export const articles: Article[] = [
   {
+    slug: 'converge-llm-contract-driven-rust',
+    title: 'Converge-LLM: Why I Built a Contract-Driven LLM Module in Pure Rust',
+    subtitle: 'Deterministic reasoning infrastructure for convergent agents',
+    author: 'Kenneth Pernyer',
+    publishedAt: '2026-01-16T10:00:00Z',
+    tags: ['llm', 'rust', 'agents', 'architecture', 'contracts'],
+    readingTime: 12,
+    featured: false,
+    content: `Most LLM integrations start with an API call and a prompt. That works until you try to build an agent framework where multiple models collaborate, decisions must be reproducible, outputs must be constrained and latency and uncertainty are engineering constraints, not "model vibes".
+
+This article is the story of how converge-llm evolved into a contract-driven, Rust-native LLM subsystem designed for a broader agent framework focused on convergence: collaborating components that align on outcomes through structure, not spectacle.
+
+The short version: a lot of reasoning does not need a giant foundation model. It needs deterministic control surfaces, structured state and tight output contracts so that small and medium models can reliably do real work.
+
+## The motivation: collaboration, not charisma
+
+In most LLM setups, you treat the model like a charismatic oracle. You feed it a narrative prompt and hope it returns something useful. That is fine for chat.
+
+But in an agent framework, you want something else:
+- multiple agents (sometimes multiple models) collaborate
+- decisions must be debuggable
+- failures must be attributable
+- outputs must be safe to consume by software
+- latency matters, especially when you chain steps
+- uncertainty is normal and must be handled explicitly
+
+If your agent runtime depends on a single large model behaving perfectly, you have not built an agent framework. You have built a brittle dependency.
+
+So I took a different approach: design the intelligence layer like infrastructure.
+
+## The Rust constraint: this is an engineering system
+
+I have a strong bias toward pure Rust for core infrastructure. Not because Rust is fashionable, but because the benefits are concrete:
+- explicit types and invariants
+- early failure instead of late surprises
+- deterministic behavior
+- predictable performance
+- code that can be audited and evolved
+
+This influenced the entire stack:
+- SurrealDB for storage (multi-model, flexible schemas)
+- LanceDB for vector search (fast retrieval on structured embeddings)
+- Polars for compute (feature engineering, metrics, state extraction)
+- Burn for ML (embedded inference, Rust-native control)
+
+This is not "Rust for Rust's sake". It is Rust to keep the system honest.
+
+## The key insight: decision quality is mostly about structure
+
+Large models provide broad capability. They also come with:
+- higher latency
+- higher cost (even locally, in compute and memory)
+- more variable behavior
+- a bigger "uncertainty surface"
+- more reliance on prompt tricks
+
+For many agent tasks, you do not need that. You need:
+- structured input state
+- clear task framing
+- explicit output constraints
+- predictable inference envelopes
+- reproducibility for debugging
+
+So the architecture became decision-first.
+
+Behavior emerges from contracts, not training.
+
+This decision-first posture is what makes small and medium models viable in practice.
+
+## The evolution: from "LLM wrapper" to "reasoning kernel"
+
+The module did not start as a grand design. It evolved through successive constraints.
+
+### Phase 1: separating responsibilities
+
+The first milestone was refusing to lump "LLM integration" into one file.
+
+The module split into clear surfaces:
+- config.rs: configuration as a contract, not convenience
+- tokenizer.rs: tokenization as a correctness surface
+- prompt.rs: structured prompts as a versioned stack
+- inference.rs: deterministic inference envelopes
+- agent.rs: integration with the agent framework
+
+This separation mattered because every later capability, validation, tracing and chain execution, depends on not having a ball of mud.
+
+### Phase 2: making it real
+
+Architecture is cheap until you run real inference.
+
+So I introduced the "engine boundary":
+- engine.rs: real inference via llama-burn
+- golden_test.rs: deterministic verification ("same input -> same output")
+
+This is the moment the system became engineering-grade. If you cannot reproduce model behavior, you cannot debug an agent system.
+
+### Phase 3: building a real decision chain
+
+Agents rarely do one thing. They chain:
+- infer signals
+- evaluate options
+- produce a plan
+
+So the system gained:
+- DecisionChain and DecisionTrace
+- a ChainExecutor that runs a real topology
+- Reasoning to Evaluation to Planning
+- no retries
+- no self-reflection
+- no tool calling
+- fail-fast behavior
+- full observability
+
+Now it behaved like infrastructure: predictable, inspectable, composable.
+
+### Phase 4A: stress testing contracts until they break
+
+At this point, the question was no longer "does it compile?"
+
+It was: are the contracts sufficient to constrain behavior under adversarial inputs?
+
+So we added output-side stress tests and tightened contracts where they were weak:
+- Reasoning required at least one explicit reasoning step before conclusion
+- Evaluation required meaningful justifications when configured
+
+The result: the system became robust in the one way that matters. It fails clearly when it should fail.
+
+## The contract stack: the "five invariants" that changed everything
+
+The most important design element is the set of explicit contracts that govern behavior.
+
+### 1) PromptStack: a five-layer cognitive API
+
+Instead of a single monolithic "system prompt", the system uses a stack:
+- Priming: identity and invariants (small, stable)
+- Policy: versioned constraints
+- Task frame: per capability framing
+- State injection: structured data (from Polars)
+- Intent: minimal user ask (intent + criteria)
+
+This prevents prompt entropy and makes cognition testable.
+
+### 2) PromptVersion: prompts co-versioned with models
+
+Prompts are part of the runtime contract. They are versioned explicitly:
+- \`reasoning:v1:llama3\`
+- \`deployment:v1:...\`
+
+This makes upgrades and regressions traceable.
+
+### 3) Config validation: fail fast on incompatibility
+
+Config is validated at startup:
+- tokenizer/model mismatches
+- precision/LoRA incompatibilities
+- invalid context budgets
+- special token errors
+
+This avoids "it runs but the output is garbage" failure modes.
+
+### 4) InferenceEnvelope: determinism as a first-class concept
+
+Inference is not "just generate tokens". It is a reproducible envelope:
+- tokenizer snapshot
+- generation params
+- seed policy
+- stopping criteria
+
+This enables golden tests and debugging.
+
+### 5) OutputContract: output shape is explicit
+
+Outputs are validated against contracts, not "vibes":
+- reasoning must include steps and conclusion
+- evaluation must include scores, confidence, justification
+- planning must include ordered steps and capability references
+
+This is the key that makes small models useful. They are not asked to be brilliant. They are asked to be bounded and consistent.
+
+### 6) DecisionTrace: provenance for every step
+
+Each chain step produces a trace:
+- inputs
+- prompt version
+- envelope
+- raw output
+- validation result
+
+This creates a pipeline that is:
+- debuggable
+- auditable
+- training-ready (later)
+
+This is how you build an agent system that can improve over time without guessing.
+
+## Why this enables convergence of collaborating models
+
+The word "converge" matters.
+
+In a collaborative agent framework, you may have:
+- a fast small model for classification or scoring
+- a medium model for planning
+- a retrieval layer for grounding
+- a database for state and memory
+
+Convergence happens when each component has:
+- a well-defined role
+- a controlled interface
+- explicit success criteria
+- observable failure modes
+
+Contracts are how you get that.
+
+Without contracts, collaboration becomes:
+- prompt spaghetti
+- ad-hoc retries
+- brittle "model whispering"
+
+With contracts, collaboration becomes:
+- predictable
+- improvable
+- composable
+
+## Why small and medium models are enough for many reasoning tasks
+
+"Reasoning" is overloaded.
+
+Many tasks we call reasoning are actually:
+- structured decision-making
+- constraint satisfaction
+- prioritization
+- scoring
+- drafting a plan from computed state
+
+These tasks are not primarily limited by model IQ. They are limited by:
+- unclear inputs
+- unclear outputs
+- unclear policies
+
+Once you fix those, the model's job becomes easier. Smaller models suddenly become viable:
+- lower latency
+- lower memory footprint
+- more predictable behavior
+- easier scaling across many agent steps
+
+In other words:
+
+You do not need a bigger brain.
+You need a better nervous system.
+
+Polars gives you the compute substrate. Burn gives you embedded inference. Contracts give you the nervous system.
+
+## The long-term payoff: training becomes justified, not speculative
+
+This is the part most systems miss.
+
+Because every decision step is traced and validated, you automatically accumulate:
+- successful chains (training candidates)
+- failures with explicit reasons
+- boundary cases that expose ambiguity
+
+So when you eventually do LoRA, it is not "let's see if training helps".
+
+It is:
+- "Evaluation confidence is miscalibrated in these scenarios"
+- "Planning consistently invents capabilities when state is underspecified"
+- "Reasoning reaches confident conclusions under contradictory metrics"
+
+Training becomes targeted correction on measured deficiencies.
+
+That is how learning should be introduced.
+
+## Closing: the real goal is engineering intelligence, not calling it
+
+The point of converge-llm is not to prove that Rust can run an LLM. It can.
+
+The point is to prove a system design thesis:
+- structure beats scale for many agent decisions
+- contracts beat prompt artistry
+- reproducibility beats intuition
+- pure Rust makes the system honest
+- Polars + Burn turn "LLM work" into a compute-first pipeline
+- convergence emerges when collaborating components share explicit interfaces
+
+The result is a module that behaves less like a chatbot and more like a dependable subsystem in a larger agent runtime.
+
+That is the kind of intelligence infrastructure I want to build.
+
+## Appendix: the stack (practical summary)
+- SurrealDB: state and memory storage (flexible, multi-model)
+- LanceDB: vector retrieval (fast embedding search)
+- Polars: compute substrate (metrics, feature extraction, state injection)
+- Burn: embedded inference and future learning (pure Rust control)
+- converge-llm: prompt contracts, inference envelopes, validation, decision chains`,
+  },
+  {
     slug: 'same-ai-prompt-ships-faster-android-than-ios',
     title: 'Why the same AI prompt ships faster on Android than on iOS (what I observed building both in parallel)',
     subtitle: 'Claude-assisted mobile development across two ecosystems',
