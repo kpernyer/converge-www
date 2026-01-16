@@ -2,15 +2,15 @@ import styles from './Core.module.css';
 import { CONVERGE_CORE_VERSION } from '../../versions';
 
 const axioms = [
-  { number: 1, name: 'Context Immutability', description: 'Context is append-only. No mutation, no surprises.' },
-  { number: 2, name: 'Agent Isolation', description: 'Agents cannot communicate directly. Context is the only interface.' },
-  { number: 3, name: 'Deterministic Ordering', description: 'Given the same context, agents always execute in the same order.' },
-  { number: 4, name: 'Convergence Guarantee', description: 'Every run terminates in finite steps with a stable state.' },
-  { number: 5, name: 'No Hidden State', description: 'All state is in the context. Period.' },
-  { number: 6, name: 'Monotonic Progress', description: 'Each cycle adds facts or reaches quiescence. Never regresses.' },
-  { number: 7, name: 'Bounded Execution', description: 'Maximum cycles and timeouts are configurable and enforced.' },
-  { number: 8, name: 'Full Observability', description: 'Every decision, every fact, every transition is logged.' },
-  { number: 9, name: 'Composability', description: 'Engines can nest. Sub-convergence is still convergence.' },
+  { number: 1, name: 'Monotonicity', formula: 'ctx ⊆ step(ctx)', description: 'Context only grows. Each step adds facts, never removes.' },
+  { number: 2, name: 'Determinism', formula: 'step(ctx) = step(ctx)', description: 'Same context always produces the same result.' },
+  { number: 3, name: 'Idempotency', formula: 'agent(ctx) = agent(agent(ctx))', description: 'Running an agent twice yields the same outcome.' },
+  { number: 4, name: 'Commutativity', formula: 'a(b(ctx)) = b(a(ctx))', description: 'Agent order doesn\'t affect the final result.' },
+  { number: 5, name: 'Termination', formula: '∃n: stepⁿ(ctx) = stepⁿ⁺¹(ctx)', description: 'Every run converges in finite steps.' },
+  { number: 6, name: 'Consistency', formula: '¬∃(f, ¬f) ∈ ctx', description: 'No contradictory facts can coexist in context.' },
+  { number: 7, name: 'Starvation Freedom', formula: 'enabled(a) ⇒ ◇runs(a)', description: 'Every enabled agent eventually executes.' },
+  { number: 8, name: 'Confluence', formula: 'ctx₁ ∪ ctx₂ → ctx*', description: 'Parallel branches merge to a single truth.' },
+  { number: 9, name: 'Observability', formula: '∀effect: logged(effect)', description: 'Every effect is recorded in the ledger.' },
 ];
 
 const concepts = [
@@ -86,7 +86,8 @@ export function Core() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>The 9 Axioms</h2>
         <p className={styles.sectionDescription}>
-          These aren't guidelines. They're guarantees enforced by the type system and runtime.
+          Mathematical guarantees that make multi-agent systems predictable.
+          Only these 9 are axioms; design tenets are principles.
         </p>
         <div className={styles.axiomGrid}>
           {axioms.map((axiom) => (
@@ -94,6 +95,7 @@ export function Core() {
               <span className={styles.axiomNumber}>{axiom.number}</span>
               <div className={styles.axiomContent}>
                 <h3 className={styles.axiomName}>{axiom.name}</h3>
+                <code className={styles.axiomFormula}>{axiom.formula}</code>
                 <p className={styles.axiomDescription}>{axiom.description}</p>
               </div>
             </div>

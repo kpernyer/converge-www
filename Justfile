@@ -8,6 +8,10 @@ default:
 dev:
     bun run dev
 
+# Alias for dev
+run:
+    bun run dev
+
 # Build for production
 build: install
     bun run build
