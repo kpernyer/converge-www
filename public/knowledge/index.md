@@ -37,6 +37,15 @@ This is the **curated reading layer** built from the canonical sources in `/know
 
 ---
 
+## Agent Stacks
+
+- Analytics agent stack: `docs/ANALYTICS_AGENT_STACK`  
+- LLM agent stack: `docs/LLM_AGENT_STACK`  
+
+**Canonical sources:** `knowledgebase/consolidated/ANALYTICS_AGENT_STACK.md`, `knowledgebase/consolidated/LLM_AGENT_STACK.md`
+
+---
+
 ## Governance & Operations
 
 - Governance: `docs/15_governance`  

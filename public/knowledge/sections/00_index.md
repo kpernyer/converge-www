@@ -48,3 +48,8 @@ Files follow: `NN_topic.md` where `NN` is a two-digit sequence.
 - `19_roadmap.md` - Roadmaps and milestones
 - `20_release_notes.md` - Release notes and changelogs
 - `21_assets.md` - Pitches and collateral
+
+## Supplemental
+
+- `ANALYTICS_AGENT_STACK.md` - Analytics agent stack summary
+- `LLM_AGENT_STACK.md` - LLM agent stack summary
