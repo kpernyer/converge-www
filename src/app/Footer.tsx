@@ -23,6 +23,8 @@ export function Footer() {
               <Link to="/provider">converge-provider</Link>
               <Link to="/domain">converge-domain</Link>
               <Link to="/runtime">converge-runtime</Link>
+              <Link to="/analytics">converge-analytics</Link>
+              <Link to="/llm">converge-llm</Link>
               <Link to="/mobile">converge-mobile</Link>
               <Link to="/tools">converge-tool</Link>
               <Link to="/ledger">converge-ledger</Link>

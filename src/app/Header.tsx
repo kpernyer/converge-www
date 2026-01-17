@@ -7,6 +7,8 @@ const subsystems = [
   { path: '/provider', name: 'converge-provider', description: 'Capability adapters' },
   { path: '/domain', name: 'converge-domain', description: 'Domain agents' },
   { path: '/runtime', name: 'converge-runtime', description: 'HTTP + gRPC server' },
+  { path: '/analytics', name: 'converge-analytics', description: 'Analytics agent stack' },
+  { path: '/llm', name: 'converge-llm', description: 'Reasoning kernel' },
   { path: '/mobile', name: 'converge-mobile', description: 'Android + iOS clients' },
   { path: '/tools', name: 'converge-tool', description: 'Truths & validation' },
   { path: '/ledger', name: 'converge-ledger', description: 'Append-only substrate' },
